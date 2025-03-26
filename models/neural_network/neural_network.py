@@ -86,4 +86,4 @@ class NeuralNetworkModel:
 
         return prediction.item()
 
-print(NeuralNetworkModel.evaluate_fen("7r/2qkbQp1/p3p2p/3pPB2/8/2p1B3/P1P3PP/KR3R2 b - - 0 27", "./models/neural_network/neural_network.pth"))
+#print(NeuralNetworkModel.evaluate_fen("7r/2qkbQp1/p3p2p/3pPB2/8/2p1B3/P1P3PP/KR3R2 b - - 0 27", "./models/neural_network/neural_network.pth"))

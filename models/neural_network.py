@@ -41,8 +41,8 @@ class NeuralNetworkModel:
         board, turn, castling, en_passant, halfmove, fullmove = game_attributes
 
         piece_map = {
-            'p': 1, 'n': 2, 'b': 3, 'r': 4, 'q': 5, 'k': 6,
-            'P': 7, 'N': 8, 'B': 9, 'R': 10, 'Q': 11, 'K': 12
+            'p': -1, 'n': -3, 'b': -3.25, 'r': -5, 'q': -9, 'k': -100,
+            'P': 1, 'N': 3, 'B': 3.25, 'R': 5, 'Q': 9, 'K': 100
         }
 
         board_vector = []

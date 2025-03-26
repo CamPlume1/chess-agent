@@ -6,4 +6,5 @@ class ChessGui:
         self.board = board
 
 
-    def print_board()
+    def print_board():
+        pass

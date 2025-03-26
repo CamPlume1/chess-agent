@@ -6,4 +6,5 @@ class ChessGui:
         self.board = board
 
 
-    def print_board()
+    def print_board(self):
+         self.board._repr_svg_()

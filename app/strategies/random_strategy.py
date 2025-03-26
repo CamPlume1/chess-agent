@@ -7,6 +7,6 @@ class RandomStrategy:
         self.board = board
 
 
-    def selectMove(self):
-        valid_moves = self.board.legal_moves()
-        return random.choice(valid_moves) if valid_moves else None
+    def select_move(self):
+        valid_moves = self.board.legal_moves
+        return random.choice(list(valid_moves)) if valid_moves else None

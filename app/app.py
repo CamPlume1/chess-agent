@@ -1,17 +1,16 @@
-from strategies.a_b_search_strategy import AB_Search
-from strategies.evaluators.standard_evaluator import StandardEvaluator
-from controller.game_controller import GameController
-from strategies.random_strategy import RandomStrategy
-from strategies.abstrategy import Strategy
-from view.gui_view import ChessGui
-from chess import Board
+import chess
+from app.controller.game_controller import GameController
+from app.strategies.random_strategy import RandomStrategy
+from app.strategies.mcts_strategy import MCTSStrategy
+from app.strategies.evaluators.neural_network_evaluator import NeuralNetworkEvaluator
+from app.strategies.abstrategy import Strategy
+from app.view.gui_view import ChessGui
 
+chess_board = chess.Board()
+evaluator1 = NeuralNetworkEvaluator()
 
-chess_board = Board()
-simple_evaluator = StandardEvaluator()
-
-agent1 = RandomStrategy(chess_board)
-agent2 = AB_Search(chess_board, simple_evaluator)
+agent1 = MCTSStrategy(board=chess_board, evaluator=evaluator1, color=chess.WHITE)
+agent2 = RandomStrategy(board=chess_board)
 view = ChessGui(chess_board)
 controller = GameController(agent1, agent2, chess_board, view)
 print(controller.play_game())

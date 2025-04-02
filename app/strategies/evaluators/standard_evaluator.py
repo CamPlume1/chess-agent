@@ -3,9 +3,6 @@ import chess
 
 
 class StandardEvaluator(PositionEvaluator):
-
-
-
     def evaluate(self, board: chess.Board, side: chess.Color) -> float:
         """
         Advanced board evaluation function considering:

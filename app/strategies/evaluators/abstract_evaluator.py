@@ -1,17 +1,14 @@
 from abc import ABC, abstractmethod
-from chess import Board, Outcome, WHITE, BLACK, Color
+import chess
 
 class PositionEvaluator(ABC):
-
-
     @abstractmethod
-    def evaluate(board: Board):
+    def evaluate(self, board: chess.Board):
         pass
 
-
-    def _game_over_evaluation(self, board: Board, side: Color):
+    def _game_over_evaluation(self, board: chess.Board, side: chess.Color):
         outcome_map = {}
-        if side == WHITE:
+        if side == chess.WHITE:
             outcome_map = {
                 "1-0": 1000000,
                 "0-1": -1000000,

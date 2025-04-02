@@ -3,10 +3,7 @@ import chess
 
 
 class StandardEvaluator(PositionEvaluator):
-
-
-
-    def evaluate_board(board: chess.Board) -> float:
+    def evaluate(self, board: chess.Board) -> float:
         """
         Advanced board evaluation function considering:
         - Material balance

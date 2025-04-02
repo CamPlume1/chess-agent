@@ -1,7 +1,8 @@
 import random
 from chess import Board
+from .abstrategy import Strategy
 
-class RandomStrategy:
+class RandomStrategy(Strategy):
 
     def __init__(self, board: Board):
         self.board = board

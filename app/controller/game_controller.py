@@ -1,10 +1,11 @@
 import time
 from chess import Board
+from strategies.abstrategy import Strategy
 
 class GameController:
 
 
-    def __init__(self, agent1, agent2, board: Board, view=None):
+    def __init__(self, agent1: Strategy, agent2: Strategy, board: Board, view=None):
         self.white = agent1
         self.black = agent2
         self.current_agent = self.white
@@ -12,7 +13,7 @@ class GameController:
         if view:
             self.view = view
 
-    def play_game(self):
+    def play_game(self) -> str:
         # Reset board to home state
         self.view.print_board()
 
@@ -28,3 +29,9 @@ class GameController:
             else:
                 self.current_agent = self.white
         
+        # Determine the game result
+        if self.board.is_checkmate():
+            # If game is over by checkmate, the last player to move was the winner
+            return "Black" if self.current_agent is self.white else "White"
+        else:
+            return "Draw"

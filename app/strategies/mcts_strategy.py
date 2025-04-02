@@ -16,10 +16,10 @@ class MCTSNode:
     def is_fully_expanded(self):
         return len(self.untried_moves) == 0
 
-    def best_child(self, c_param=1.41):
+    def best_child(self):
         return max(
             self.children,
-            key=lambda child: (child.value / child.visits) + c_param * math.sqrt(math.log(self.visits) / child.visits)
+            key=lambda child: (child.value / child.visits) + math.sqrt(2 * math.log(self.visits) / child.visits)
         )
 
     def expand(self):

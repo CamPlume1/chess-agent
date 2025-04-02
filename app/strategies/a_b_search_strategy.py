@@ -1,21 +1,16 @@
-import random
-from chess import Board, WHITE, BLACK, Color
-from strategies.abstrategy import Strategy
-from strategies.evaluators.abstract_evaluator import PositionEvaluator
+import chess
+from app.strategies.abstrategy import Strategy
+from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 
-
-class AB_Search(Strategy):
-
-    def __init__(self, board: Board, positional_evaluator: PositionEvaluator, side=WHITE, max_depth=5):
+class ABPruningStrategy(Strategy):
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side=chess.WHITE, max_depth=5):
         super().__init__(side=side)
-        self.evaluator = positional_evaluator
+        self.evaluator = evaluator
         self.board = board
         self.max_depth= max_depth
         self.seen : dict[str: int] = {} # Uses fen representation to track seen states
 
-
     def select_move(self):
-
         # Get list of valid moves
         valid_moves = self.board.legal_moves
 
@@ -48,13 +43,7 @@ class AB_Search(Strategy):
         print(f"Selected move with value: {best_value}")
         return best_move
 
-        
-
-    
-
-
-
-    def _alpha_beta(self, board_copy: Board, depth: int, beta: float, alpha: float, side: Color):
+    def _alpha_beta(self, board_copy: chess.Board, depth: int, beta: float, alpha: float, side: chess.Color):
         # Create a unique key for the board position
         board_key = board_copy.fen()
         
@@ -93,9 +82,8 @@ class AB_Search(Strategy):
             
             self.seen[board_key] = value
             return value
-    
 
     # Get opposite side easily
     def _opposing_side(self, side):
-        return BLACK if side == WHITE else WHITE
+        return chess.BLACK if side == chess.WHITE else chess.WHITE
     

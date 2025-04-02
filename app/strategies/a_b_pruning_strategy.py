@@ -20,7 +20,6 @@ class ABPruningStrategy(Strategy):
         alpha = float('-inf')
         beta = float('inf')
 
-
         for move in valid_moves:
             # Make a copy of the board for simulation
             board_copy = self.board.copy()
@@ -53,7 +52,7 @@ class ABPruningStrategy(Strategy):
         
         # Check for terminal condition
         if depth == 0 or not board_copy.legal_moves:
-            evaluation = self.evaluator.evaluate(board_copy, side)
+            evaluation = self.evaluator.evaluate(board_copy)
             self.seen[board_key] = evaluation
             return evaluation
         

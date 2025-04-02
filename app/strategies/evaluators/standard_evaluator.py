@@ -3,7 +3,7 @@ import chess
 
 
 class StandardEvaluator(PositionEvaluator):
-    def evaluate(self, board: chess.Board, side: chess.Color) -> float:
+    def evaluate(self, board: chess.Board) -> float:
         """
         Advanced board evaluation function considering:
         - Material balance
@@ -13,8 +13,8 @@ class StandardEvaluator(PositionEvaluator):
         """
         if board.is_game_over():
             print("End State Found")
-            print("State Evaluation: ", super()._game_over_evaluation(board, side))
-            return super()._game_over_evaluation(board, side)
+            print("State Evaluation: ", super()._game_over_evaluation(board))
+            return super()._game_over_evaluation(board)
 
         # Piece values (in centipawns) -> Very high king value to discincentivize losing King.
         piece_values = {
@@ -25,6 +25,11 @@ class StandardEvaluator(PositionEvaluator):
             chess.QUEEN: 900,
             chess.KING: 10000,
         }
+
+        side_values = {
+            chess.WHITE: 1,
+            chess.BLACK: -1,
+        }
         
         # Initialize evaluation components
         material_balance = 0
@@ -34,14 +39,9 @@ class StandardEvaluator(PositionEvaluator):
             piece = board.piece_at(square)
             
             if piece:
-                value = piece_values[piece.piece_type]
-                
-                # Negative value for black pieces
-                if piece.color != side:
-                    value = -value
+                value = piece_values[piece.piece_type] * side_values[piece.color]
                 
                 material_balance += value
-
         
         return material_balance
 

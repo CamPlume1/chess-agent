@@ -1,14 +1,15 @@
 import chess
 import math
+from typing import List
 from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 from app.strategies.abstrategy import Strategy
 
 class MCTSNode:
-    def __init__(self, board: chess.Board, parent=None, move=None):
+    def __init__(self, board: chess.Board, parent: 'MCTSNode' = None, move: chess.Move = None):
         self.board = board
         self.parent = parent
         self.move = move
-        self.children = []
+        self.children: List[MCTSNode] = []
         self.visits = 0
         self.value = 0.0
         self.untried_moves = list(board.legal_moves)

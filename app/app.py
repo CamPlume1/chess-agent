@@ -2,7 +2,7 @@ import chess
 from app.controller.game_controller import GameController
 from app.strategies.random_strategy import RandomStrategy
 from app.strategies.mcts_strategy import MCTSStrategy
-from app.strategies.a_b_search_strategy import ABPruningStrategy
+from app.strategies.a_b_pruning_strategy import ABPruningStrategy
 from app.strategies.evaluators.neural_network_evaluator import NeuralNetworkEvaluator
 from app.strategies.evaluators.standard_evaluator import StandardEvaluator
 from app.strategies.abstrategy import Strategy

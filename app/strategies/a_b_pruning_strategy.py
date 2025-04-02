@@ -86,4 +86,3 @@ class ABPruningStrategy(Strategy):
     # Get opposite side easily
     def _opposing_side(self, side):
         return chess.BLACK if side == chess.WHITE else chess.WHITE
-    

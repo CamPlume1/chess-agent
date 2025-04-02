@@ -1,11 +1,11 @@
 import chess
 import math
-from chess import Board
+import chess
 from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 from app.strategies.abstrategy import Strategy
 
 class MCTSNode:
-    def __init__(self, board: Board, parent=None, move=None):
+    def __init__(self, board: chess.Board, parent=None, move=None):
         self.board = board
         self.parent = parent
         self.move = move
@@ -39,7 +39,7 @@ class MCTSNode:
 
 
 class MCTSStrategy(Strategy):
-    def __init__(self, board: Board, evaluator: PositionEvaluator, color: bool, simulations=100):
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, color: bool, simulations=100):
         self.board = board
         self.evaluator = evaluator
         self.color = color
@@ -63,6 +63,6 @@ class MCTSStrategy(Strategy):
         best_move = max(root.children, key=lambda child: child.visits).move
         return best_move
 
-    def _evaluate_leaf(self, board: Board) -> float:
+    def _evaluate_leaf(self, board: chess.Board) -> float:
         score = self.evaluator.evaluate(board)
         return score if self.color == chess.WHITE else -score

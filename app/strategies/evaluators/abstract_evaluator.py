@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from chess import Board
+import chess
 
 class PositionEvaluator(ABC):
     @abstractmethod
-    def evaluate(self, board: Board):
+    def evaluate(self, board: chess.Board):
         pass

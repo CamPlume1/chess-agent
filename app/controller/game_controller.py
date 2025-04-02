@@ -1,11 +1,11 @@
 import time
-from chess import Board
+import chess
 from app.strategies.abstrategy import Strategy
 
 class GameController:
 
 
-    def __init__(self, agent1: Strategy, agent2: Strategy, board: Board, view=None):
+    def __init__(self, agent1: Strategy, agent2: Strategy, board: chess.Board, view=None):
         self.white = agent1
         self.black = agent2
         self.current_agent = self.white

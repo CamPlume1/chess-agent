@@ -1,6 +1,5 @@
 import chess
 import math
-import chess
 from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 from app.strategies.abstrategy import Strategy
 
@@ -36,7 +35,6 @@ class MCTSNode:
         self.value += value
         if self.parent:
             self.parent.backpropagate(-value)
-
 
 class MCTSStrategy(Strategy):
     def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side: bool, simulations=100):

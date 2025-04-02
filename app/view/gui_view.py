@@ -49,11 +49,11 @@ class ChessGui:
         </html>
         """
         
-        with open('chess_boards/index.html', 'w') as f:
+        with open('app/chess_boards/index.html', 'w') as f:
             f.write(html_content)
 
     def print_board(self):
-        file_path = os.path.join('chess_boards', 'current_board.svg')
+        file_path = os.path.join('app/chess_boards', 'current_board.svg')
 
         svg = chess.svg.board(self.board)
         
@@ -63,7 +63,7 @@ class ChessGui:
         
         # Open only once
         if not hasattr(self, 'browser_opened'):
-            webbrowser.open(f'http://localhost:{self.port_num}/chess_boards/index.html')
+            webbrowser.open(f'http://localhost:{self.port_num}/app/chess_boards/index.html')
             self.browser_opened = True
 
     def cleanup(self):

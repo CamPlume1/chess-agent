@@ -32,7 +32,7 @@ class ABPruningStrategy(Strategy):
             
             # Update best move if found
             if value > best_value:
-                print(f"Replacing best move value {best_value} with new value{value}")
+                print(f"Replacing best move value {best_value} with new value {value}")
                 best_value = value
                 best_move = move
             

@@ -37,7 +37,7 @@ class MCTSNode:
             self.parent.backpropagate(-value)
 
 class MCTSStrategy(Strategy):
-    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side: bool, simulations=100):
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side: bool, simulations=1000):
         self.board = board
         self.evaluator = evaluator
         self.side = side

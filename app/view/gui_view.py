@@ -17,7 +17,12 @@ class ChessGui:
     def start_local_server(self):
         os.makedirs('chess_boards', exist_ok=True)  # Ensure directory exists
 
-        handler = http.server.SimpleHTTPRequestHandler
+        class SilentHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+            def log_message(self, format, *args):
+                pass  # Suppresses logging
+
+
+        handler = SilentHTTPRequestHandler
         self.httpd = socketserver.TCPServer(('', 8000), handler)
         self.port_num = 8000
 

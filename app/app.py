@@ -7,9 +7,10 @@ from app.strategies.abstrategy import Strategy
 from app.view.gui_view import ChessGui
 
 chess_board = chess.Board()
+evaluator1 = NeuralNetworkEvaluator()
 
-agent1 = RandomStrategy(chess_board)
-agent2 = RandomStrategy(chess_board)
+agent1 = MCTSStrategy(board=chess_board, evaluator=evaluator1, color=chess.WHITE)
+agent2 = RandomStrategy(board=chess_board)
 view = ChessGui(chess_board)
 controller = GameController(agent1, agent2, chess_board, view)
 print(controller.play_game())

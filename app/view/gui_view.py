@@ -15,7 +15,7 @@ class ChessGui:
         self.start_local_server()
 
     def start_local_server(self):
-        os.makedirs('chess_boards', exist_ok=True)  # Ensure directory exists
+        os.makedirs('app/chess_boards', exist_ok=True)  # Ensure directory exists
 
         handler = http.server.SimpleHTTPRequestHandler
         self.httpd = socketserver.TCPServer(('', 8000), handler)

@@ -9,7 +9,7 @@ from app.view.gui_view import ChessGui
 chess_board = chess.Board()
 evaluator1 = NeuralNetworkEvaluator()
 
-agent1 = MCTSStrategy(board=chess_board, evaluator=evaluator1, color=chess.WHITE)
+agent1 = MCTSStrategy(board=chess_board, evaluator=evaluator1, side=chess.WHITE)
 agent2 = RandomStrategy(board=chess_board)
 view = ChessGui(chess_board)
 controller = GameController(agent1, agent2, chess_board, view)

@@ -39,10 +39,10 @@ class MCTSNode:
 
 
 class MCTSStrategy(Strategy):
-    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, color: bool, simulations=100):
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side: bool, simulations=100):
         self.board = board
         self.evaluator = evaluator
-        self.color = color
+        self.side = side
         self.simulations = simulations
 
     def select_move(self):
@@ -65,4 +65,4 @@ class MCTSStrategy(Strategy):
 
     def _evaluate_leaf(self, board: chess.Board) -> float:
         score = self.evaluator.evaluate(board)
-        return score if self.color == chess.WHITE else -score
+        return score if self.side == chess.WHITE else -score

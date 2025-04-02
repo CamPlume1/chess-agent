@@ -12,6 +12,8 @@ class StandardEvaluator(PositionEvaluator):
         - Piece mobility
         """
         if board.is_game_over():
+            print("End State Found")
+            print("State Evaluation: ", super()._game_over_evaluation(board, side))
             return super()._game_over_evaluation(board, side)
 
         # Piece values (in centipawns) -> Very high king value to discincentivize losing King.

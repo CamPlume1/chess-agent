@@ -7,7 +7,7 @@ from strategies.evaluators.abstract_evaluator import PositionEvaluator
 class AB_Search(Strategy):
 
     # Depth must be greater than 1, or function will fail.
-    def __init__(self, board: Board, positional_evaluator: PositionEvaluator, side=WHITE, max_depth=5):
+    def __init__(self, board: Board, positional_evaluator: PositionEvaluator, side=WHITE, max_depth=3):
         super().__init__(side=side)
         self.evaluator = positional_evaluator
         self.board = board
@@ -56,6 +56,7 @@ class AB_Search(Strategy):
                 if score > alpha:
                     alpha = score
             if score >= beta:
+                print("Prune with remaining depth: ", depth - 1)
                 return score, best_move
         return best_value, best_move
 
@@ -75,5 +76,6 @@ class AB_Search(Strategy):
                 if score < beta:
                     beta = score
             if score <= alpha:
+                print("Prune with remaining depth: ", depth - 1)
                 return score, best_move
         return best_value, best_move

@@ -17,3 +17,7 @@ view = ChessGui(chess_board)
 controller = GameController(agent1, agent2, chess_board, view)
 print(controller.play_game())
 view.cleanup()
+svg = chess.svg.board(chess_board)
+
+with open("final_board_state.svg", 'w') as f:
+    f.write(svg)

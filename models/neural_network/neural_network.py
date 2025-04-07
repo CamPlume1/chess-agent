@@ -32,6 +32,9 @@ class ChessEvaluationNeuralNetwork(nn.Module):
         return self.model(x)
 
 class NeuralNetworkModel:
+    _model = None
+    _input_size = None
+
     @staticmethod
     def fen_to_feature_array(fen: str):
         game_attributes = fen.split()
@@ -73,17 +76,21 @@ class NeuralNetworkModel:
     
     @staticmethod
     def evaluate_fen(fen: str, model_path: str):
+        if NeuralNetworkModel._model is None:
+            print("Loading New Model")
+            features = NeuralNetworkModel.fen_to_feature_array(fen)
+            input_tensor = torch.tensor(features, dtype=torch.float32).unsqueeze(0)
+            NeuralNetworkModel._input_size = input_tensor.shape[1]
+
+            model = ChessEvaluationNeuralNetwork(NeuralNetworkModel._input_size)
+            model.load_state_dict(torch.load(model_path))
+            model.eval()
+            NeuralNetworkModel._model = model
+
         features = NeuralNetworkModel.fen_to_feature_array(fen)
         input_tensor = torch.tensor(features, dtype=torch.float32).unsqueeze(0)
 
-        input_size = input_tensor.shape[1]
-        model = ChessEvaluationNeuralNetwork(input_size)
-        model.load_state_dict(torch.load(model_path))
-        model.eval()
-
         with torch.no_grad():
-            prediction = model(input_tensor)
+            prediction = NeuralNetworkModel._model(input_tensor)
 
         return prediction.item()
-
-#print(NeuralNetworkModel.evaluate_fen("7r/2qkbQp1/p3p2p/3pPB2/8/2p1B3/P1P3PP/KR3R2 b - - 0 27", "./models/neural_network/neural_network.pth"))

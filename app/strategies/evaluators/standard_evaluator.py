@@ -3,8 +3,6 @@ import chess
 
 
 class StandardEvaluator(PositionEvaluator):
-
-
     def evaluate(self, board: chess.Board) -> float:
         """
         Advanced board evaluation function considering:
@@ -36,6 +34,11 @@ class StandardEvaluator(PositionEvaluator):
             chess.ROOK: 500,
             chess.QUEEN: 900,
             chess.KING: 10000,
+        }
+
+        side_values = {
+            chess.WHITE: 1,
+            chess.BLACK: -1,
         }
         
         # Initialize evaluation components

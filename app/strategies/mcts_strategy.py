@@ -1,15 +1,15 @@
 import chess
 import math
-import chess
+from typing import List
 from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 from app.strategies.abstrategy import Strategy
 
 class MCTSNode:
-    def __init__(self, board: chess.Board, parent=None, move=None):
+    def __init__(self, board: chess.Board, parent: 'MCTSNode' = None, move: chess.Move = None):
         self.board = board
         self.parent = parent
         self.move = move
-        self.children = []
+        self.children: List[MCTSNode] = []
         self.visits = 0
         self.value = 0.0
         self.untried_moves = list(board.legal_moves)
@@ -17,10 +17,10 @@ class MCTSNode:
     def is_fully_expanded(self):
         return len(self.untried_moves) == 0
 
-    def best_child(self, c_param=1.41):
+    def best_child(self):
         return max(
             self.children,
-            key=lambda child: (child.value / child.visits) + c_param * math.sqrt(math.log(self.visits) / child.visits)
+            key=lambda child: (child.value / child.visits) + math.sqrt(2 * math.log(self.visits) / child.visits)
         )
 
     def expand(self):
@@ -37,12 +37,11 @@ class MCTSNode:
         if self.parent:
             self.parent.backpropagate(-value)
 
-
 class MCTSStrategy(Strategy):
-    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, color: bool, simulations=100):
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side: bool, simulations=100):
         self.board = board
         self.evaluator = evaluator
-        self.color = color
+        self.side = side
         self.simulations = simulations
 
     def select_move(self):
@@ -65,4 +64,4 @@ class MCTSStrategy(Strategy):
 
     def _evaluate_leaf(self, board: chess.Board) -> float:
         score = self.evaluator.evaluate(board)
-        return score if self.color == chess.WHITE else -score
+        return score if self.side == chess.WHITE else -score

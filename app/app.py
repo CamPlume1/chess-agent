@@ -1,7 +1,7 @@
 import chess
 from controller.game_controller import GameController
 from strategies.random_strategy import RandomStrategy
-#from strategies.evaluators.neural_network_evaluator import NeuralNetworkEvaluator
+from strategies.evaluators.neural_network_evaluator import NeuralNetworkEvaluator
 from strategies.evaluators.standard_evaluator import StandardEvaluator
 from strategies.abstrategy import Strategy
 from view.gui_view import ChessGui

@@ -48,11 +48,7 @@ class StandardEvaluator(PositionEvaluator):
         for square in chess.SQUARES:
             piece = board.piece_at(square)
             if piece:
-                value = piece_values[piece.piece_type]
-                
-                # Negative value for black pieces
-                if piece.color != chess.WHITE:
-                    value = -value
+                value = piece_values[piece.piece_type] * side_values[piece.color]
                 
                 material_balance += value
         return material_balance

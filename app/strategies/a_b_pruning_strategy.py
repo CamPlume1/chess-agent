@@ -6,7 +6,7 @@ from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 class ABPruningStrategy(Strategy):
 
     # Depth must be greater than 1, or function will fail.
-    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side=chess.WHITE, max_depth=5):
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side=chess.WHITE, max_depth=4):
         super().__init__(side=side)
         self.evaluator = evaluator
         self.board = board
@@ -14,9 +14,6 @@ class ABPruningStrategy(Strategy):
         self.seen : dict[str: int] = {} # Uses fen representation to track seen states
 
     def select_move(self):
-        # Get list of valid moves
-        valid_moves = self.board.legal_moves
-
         # Initialize parameter states
         best_move = None
         best_value = float('-inf')

@@ -1,6 +1,6 @@
 import time
 import chess
-from strategies.abstrategy import Strategy
+from app.strategies.abstrategy import Strategy
 
 class GameController:
 

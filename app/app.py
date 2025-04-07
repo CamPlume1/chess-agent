@@ -1,11 +1,11 @@
 import chess
-from controller.game_controller import GameController
-from strategies.random_strategy import RandomStrategy
-from strategies.evaluators.neural_network_evaluator import NeuralNetworkEvaluator
-from strategies.evaluators.standard_evaluator import StandardEvaluator
-from strategies.abstrategy import Strategy
-from view.gui_view import ChessGui
-from strategies.a_b_search_strategy import AB_Search
+from app.controller.game_controller import GameController
+from app.strategies.random_strategy import RandomStrategy
+from app.strategies.mcts_strategy import MCTSStrategy
+from app.strategies.a_b_pruning_strategy import ABPruningStrategy
+from app.strategies.evaluators.neural_network_evaluator import NeuralNetworkEvaluator
+from app.strategies.evaluators.standard_evaluator import StandardEvaluator
+from app.view.gui_view import ChessGui
 
 chess_board = chess.Board()
 #evaluator1 = NeuralNetworkEvaluator()

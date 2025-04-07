@@ -1,5 +1,6 @@
 import chess
 import math
+import random
 from typing import List
 from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 from app.strategies.abstrategy import Strategy
@@ -38,7 +39,7 @@ class MCTSNode:
             self.parent.backpropagate(-value)
 
 class MCTSStrategy(Strategy):
-    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side: bool, simulations=100):
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side: bool, simulations=10000):
         self.board = board
         self.evaluator = evaluator
         self.side = side
@@ -62,6 +63,17 @@ class MCTSStrategy(Strategy):
         best_move = max(root.children, key=lambda child: child.visits).move
         return best_move
 
-    def _evaluate_leaf(self, board: chess.Board) -> float:
-        score = self.evaluator.evaluate(board)
+    def _evaluate_leaf(self, board: chess.Board, rollout_depth=4) -> float:
+        sim_board = board.copy()
+        moves_played = 0
+
+        while not sim_board.is_game_over() and moves_played < rollout_depth:
+            legal_moves = list(sim_board.legal_moves)
+            if not legal_moves:
+                break
+            move = random.choice(legal_moves)
+            sim_board.push(move)
+            moves_played += 1
+
+        score = self.evaluator.evaluate(sim_board)
         return score if self.side == chess.WHITE else -score

@@ -6,19 +6,10 @@ class PositionEvaluator(ABC):
     def evaluate(self, board: chess.Board):
         pass
 
-    def _game_over_evaluation(self, board: chess.Board, side: chess.Color):
-        outcome_map = {}
-        if side == chess.WHITE:
-            outcome_map = {
-                "1-0": 1000000,
-                "0-1": -1000000,
-                "1/2-1/2": 0,
-            }
-        else:
-            outcome_map = {
-                "1-0": -1000000,
-                "0-1": 1000000,
-                "1/2-1/2": 0,
-            }
-
+    def _game_over_evaluation(self, board: chess.Board):
+        outcome_map = {
+            "1-0": 10000000,
+            "0-1": -10000000,
+            "1/2-1/2": 0,
+        }
         return outcome_map[board.outcome().result()]

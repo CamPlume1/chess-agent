@@ -6,6 +6,7 @@ from strategies.evaluators.abstract_evaluator import PositionEvaluator
 
 class AB_Search(Strategy):
 
+    # Depth must be greater than 1, or function will fail.
     def __init__(self, board: Board, positional_evaluator: PositionEvaluator, side=WHITE, max_depth=5):
         super().__init__(side=side)
         self.evaluator = positional_evaluator
@@ -26,76 +27,53 @@ class AB_Search(Strategy):
         beta = float('inf')
 
 
-        for move in valid_moves:
-            # Make a copy of the board for simulation
-            board_copy = self.board.copy()
-            
-            # Make the move
-            board_copy.push(move)
-            
-            # Calculate the value of this move
-            value = -self._alpha_beta(board_copy, self.max_depth - 1, -beta, -alpha, self._opposing_side(self.side))
-            
-            # Update best move if found
-            if value > best_value:
-                print(f"Replacing best move value {best_value} with new value{value}")
-                best_value = value
-                best_move = move
-            
-            # Update alpha
-            alpha = max(alpha, value)
+        if self.side == WHITE:
+            best_value, best_move = self._a_b_maximizer(self.board, self.max_depth, alpha=alpha, beta=beta)
+
+        else:
+            best_value, best_move = self._a_b_minimizer(self.board, self.max_depth, alpha=alpha, beta=beta)
+
 
         print(f"Selected move with value: {best_value}")
         return best_move
 
-        
-
     
 
+    def _a_b_maximizer(self, board: Board, depth: int, alpha: float, beta: float):
+        if depth == 0 or board.is_game_over():
+            return self.evaluator.evaluate(board), None
+        
+        best_value = float('-inf')
+        moves = board.legal_moves
+        best_move = None
+        for move in moves:
+            board.push(move) 
+            score, _ = self._a_b_minimizer(board, depth-1, alpha, beta)
+            board.pop()
+            if score > best_value:
+                best_value = score
+                best_move = move
+                if score > alpha:
+                    alpha = score
+            if score >= beta:
+                return score, best_move
+        return best_value, best_move
 
-
-    def _alpha_beta(self, board_copy: Board, depth: int, beta: float, alpha: float, side: Color):
-        # Create a unique key for the board position
-        board_key = board_copy.fen()
-        
-        # Check if we've seen this position before
-        if board_key in self.seen:
-            return self.seen[board_key]
-        
-        # Check for terminal condition
-        if depth == 0 or not board_copy.legal_moves:
-            evaluation = self.evaluator.evaluate(board_copy, side)
-            self.seen[board_key] = evaluation
-            return evaluation
-        
-        if side == self.side:  # Maximizing player
-            value = float('-inf')
-            for move in board_copy.legal_moves:
-                move_board = board_copy.copy()
-                move_board.push(move)
-                value = max(value, self._alpha_beta(move_board, depth - 1, alpha, beta, self._opposing_side(side)))
-                alpha = max(alpha, value)
-                if alpha >= beta:
-                    break  # Beta cut-off
-            
-            self.seen[board_key] = value
-            return value
-        
-        else:  # Minimizing player
-            value = float('inf')
-            for move in board_copy.legal_moves:
-                move_board = board_copy.copy()
-                move_board.push(move)
-                value = min(value, self._alpha_beta(move_board, depth - 1, alpha, beta, self._opposing_side(side)))
-                beta = min(beta, value)
-                if alpha >= beta:
-                    break  # Alpha cut-off
-            
-            self.seen[board_key] = value
-            return value
-    
-
-    # Get opposite side easily
-    def _opposing_side(self, side):
-        return BLACK if side == WHITE else WHITE
-    
+    def _a_b_minimizer(self, board: Board, depth, alpha, beta):
+        if depth == 0 or board.is_game_over():
+            return self.evaluator.evaluate(board), None
+        best_value = float('inf')
+        moves = board.legal_moves
+        best_move = None
+        for move in moves:
+            board.push(move)
+            score, _ = self._a_b_maximizer(board, depth-1, alpha, beta)
+            board.pop()
+            if (score < best_value):
+                best_value = score
+                best_move = move
+                if score < beta:
+                    beta = score
+            if score <= alpha:
+                return score, best_move
+        return best_value, best_move

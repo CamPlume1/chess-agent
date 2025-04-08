@@ -8,11 +8,11 @@ from app.strategies.evaluators.standard_evaluator import StandardEvaluator
 from app.view.gui_view import ChessGui
 
 chess_board = chess.Board()
-evaluator1 = NeuralNetworkEvaluator()
-evaluator2 = StandardEvaluator()
+evaluator1 = StandardEvaluator()
+evaluator2 = NeuralNetworkEvaluator()
 
-agent1 = ABPruningStrategy(board=chess_board, evaluator=evaluator2, side=chess.WHITE)
-agent2 = MCTSStrategy(board=chess_board, evaluator=evaluator1, side=chess.BLACK)
+agent1 = ABPruningStrategy(board=chess_board, evaluator=evaluator1, side=chess.WHITE)
+agent2 = MCTSStrategy(board=chess_board, evaluator=evaluator2, side=chess.BLACK)
 view = ChessGui(chess_board)
 controller = GameController(agent1, agent2, chess_board, view)
 print(controller.play_game())

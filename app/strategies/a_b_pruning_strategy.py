@@ -6,10 +6,9 @@ from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 class ABPruningStrategy(Strategy):
 
     # Depth must be greater than 1, or function will fail.
-    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side=chess.WHITE, max_depth=3):
-        super().__init__(side=side)
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side=chess.WHITE, max_depth=4):
+        super().__init__(board=board, side=side)
         self.evaluator = evaluator
-        self.board = board
         self.max_depth= max_depth
         self.seen : dict[str: int] = {} # Uses fen representation to track seen states
 
@@ -50,7 +49,7 @@ class ABPruningStrategy(Strategy):
                 if score > alpha:
                     alpha = score
             if score >= beta:
-                print("Prune with remaining depth: ", depth - 1)
+                # print("Prune with remaining depth: ", depth - 1)
                 return score, best_move
         return best_value, best_move
 
@@ -70,6 +69,6 @@ class ABPruningStrategy(Strategy):
                 if score < beta:
                     beta = score
             if score <= alpha:
-                print("Prune with remaining depth: ", depth - 1)
+                # print("Prune with remaining depth: ", depth - 1)
                 return score, best_move
         return best_value, best_move

@@ -94,5 +94,3 @@ class NeuralNetworkModel:
             prediction = NeuralNetworkModel._model(input_tensor)
 
         return prediction.item()
-
-print("test")

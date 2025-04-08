@@ -1,0 +1,8 @@
+
+=== Final Results ([AB + Standard] vs [Stockfish]) ===
+Wins: 2, Losses: 8, Draws: 0
+Number of games: 10
+Average moves per game (plies): 88.3
+Score: 0.200
+Estimated Elo difference vs benchmark: -240.82
+AB + Standard ≈ 1079 Elo (assuming Stockfish is 1320)

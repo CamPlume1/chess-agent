@@ -86,6 +86,7 @@ class ChessAgentEvaluator:
         summary = (
             f"\n=== Final Results ([{self.agent_name}] vs [{self.benchmark_name}]) ===\n"
             f"Wins: {self.results['win']}, Losses: {self.results['loss']}, Draws: {self.results['draw']}\n"
+            f"Number of games: {total_games}"
             f"Average moves per game (plies): {avg_moves:.1f}\n"
             f"Score: {(self.results['win'] + 0.5 * self.results['draw']) / total_games:.3f}\n"
             f"Estimated Elo difference vs benchmark: {diff:.2f}\n"

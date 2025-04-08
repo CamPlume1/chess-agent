@@ -3,9 +3,31 @@ from app.controller.game_controller import GameController
 from app.strategies.random_strategy import RandomStrategy
 from app.strategies.mcts_strategy import MCTSStrategy
 from app.strategies.a_b_pruning_strategy import ABPruningStrategy
+from app.strategies.stockfish_strategy import StockfishStrategy
 from app.strategies.evaluators.neural_network_evaluator import NeuralNetworkEvaluator
 from app.strategies.evaluators.standard_evaluator import StandardEvaluator
+from app.benchmarking.benchmark import ChessAgentEvaluator
 from app.view.gui_view import ChessGui
+
+agent = ABPruningStrategy(
+    board=None,
+    evaluator=StandardEvaluator(),
+    side=None
+)
+
+benchmark = StockfishStrategy(
+    board=None,
+    side=None,
+    stockfish_path="/usr/local/bin/stockfish",
+    skill_level=0,
+    uci_elo=1320,
+    move_time=0.1
+)
+
+evaluator = ChessAgentEvaluator(
+    agent=agent,
+    benchmark=benchmark
+)
 
 chess_board = chess.Board()
 evaluator1 = StandardEvaluator()

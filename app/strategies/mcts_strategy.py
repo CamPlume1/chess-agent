@@ -40,9 +40,8 @@ class MCTSNode:
 
 class MCTSStrategy(Strategy):
     def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side: bool, simulations=1000):
-        self.board = board
+        super().__init__(board=board, side=side)
         self.evaluator = evaluator
-        self.side = side
         self.simulations = simulations
 
     def select_move(self):

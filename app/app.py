@@ -1,6 +1,5 @@
 import chess
 import chess.svg
-from app.controller.game_controller import GameController
 from app.strategies.random_strategy import RandomStrategy
 from app.strategies.mcts_strategy import MCTSStrategy
 from app.strategies.a_b_pruning_strategy import ABPruningStrategy

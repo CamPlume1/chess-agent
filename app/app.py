@@ -29,6 +29,11 @@ stockfish = StockfishStrategy(
     move_time=0.1
 )
 
+random = RandomStrategy(
+    board=None,
+    side=None
+)
+
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent,

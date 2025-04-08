@@ -6,7 +6,7 @@ from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 class ABPruningStrategy(Strategy):
 
     # Depth must be greater than 1, or function will fail.
-    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side=chess.WHITE, max_depth=4):
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side=chess.WHITE, max_depth=3):
         super().__init__(side=side)
         self.evaluator = evaluator
         self.board = board

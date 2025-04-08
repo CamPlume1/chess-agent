@@ -61,6 +61,8 @@ class ChessEvaluationConvolutionalNetwork(nn.Module):
 # This class handles operations regarding converting board representations to acceptable inputs to the convolutional network
 class ConvolutionInputModel:
 
+    _model = None
+
 
     # Outputs a 12 * 8 * 8 vector with the board, and 4 meta features [turn, w_castle, black castle, en_passant_target_square]
     @staticmethod
@@ -110,20 +112,18 @@ class ConvolutionInputModel:
       
     # TODO: use a saved model to print the output of a usage of this function
     @staticmethod
-    def evaluate_fen(fen: str, model_path: str, device='cuda'):
+    def evaluate_fen(fen: str, model_path: str):
+        if ConvolutionInputModel._model is None:
+            print("Loading convolutional model")
+            model = ChessEvaluationConvolutionalNetwork()
+            model.load_state_dict(torch.load(model_path))
+            model.eval()
+            ConvolutionInputModel._model = model
+
         board_features, meta_features = ConvolutionInputModel.fen_to_feature_array(fen)
 
-        # Move features to the correct device
-        board_features = board_features.to(device)
-        meta_features = meta_features.to(device)
-
-        model = ChessEvaluationConvolutionalNetwork()
-        model.load_state_dict(torch.load(model_path, map_location=device))
-        model.to(device)
-        model.eval()
-
         with torch.no_grad():
-            prediction = model(board_features, meta_features)
+            prediction = ConvolutionInputModel._model(board_features, meta_features)
 
         return prediction.item()
     

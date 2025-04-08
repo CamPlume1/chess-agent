@@ -15,7 +15,7 @@ view = ChessGui(initial_board)
 
 agent = MCTSStrategy(
     board=None,
-    evaluator=NeuralNetworkEvaluator(),
+    evaluator=ConvolutionalNetworkEvaluator(),
     side=None,
 )
 
@@ -36,7 +36,7 @@ random = RandomStrategy(
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
-        agent_name="MCTS + FF",
+        agent_name="MCTS + CNN",
         benchmark=stockfish,
         benchmark_name="Stockfish",
         benchmark_elo=1320,

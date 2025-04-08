@@ -31,11 +31,13 @@ stockfish = StockfishStrategy(
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent1,
+        agent_name="AB Pruning + Standard Evaluator",
         benchmark=stockfish,
+        benchmark_name="Stockfish",
         benchmark_elo=1320,
         view=view
     )
-    evaluator.run_match(n_games=10)
+    evaluator.run_match(n_games=1)
     evaluator.print_summary()
 
 finally:

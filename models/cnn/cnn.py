@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset
 import pandas as pd
+import torch.nn.init as init
 
 
 # Dataset helper class
@@ -17,9 +18,9 @@ class ChessDataset(Dataset):
         return len(self.Y)
 
     def __getitem__(self, idx):
-        board = self.X['board_vec'][idx]  # Using direct indexing for tensors
-        meta = self.X['meta_vec'][idx]    # Using direct indexing for tensors
-        label = self.Y[idx]  # Use direct indexing for tensors
+        board = self.X['board_vec'][idx]
+        meta = self.X['meta_vec'][idx]
+        label = self.Y[idx]
         return board, meta, label
 
 # The Vibe model
@@ -27,35 +28,38 @@ class ChessEvaluationConvolutionalNetwork(nn.Module):
     def __init__(self):
         super().__init__()
 
+       # Process relative position of pieces
         # Process relative position of pieces
         self.conv_layers = nn.Sequential(
-                nn.Conv2d(12, 18, kernel_size=3, padding=1),
-                nn.ReLU(),
-                nn.Conv2d(18, 32, kernel_size=3, padding=1), 
-                nn.ReLU(),
-                nn.Flatten(),
-                nn.Linear(2048, 256)
+            nn.Conv2d(12, 18, kernel_size=3, padding=1),
+            nn.BatchNorm2d(18), 
+            nn.LeakyReLU(negative_slope=0.01), 
+            nn.Conv2d(18, 32, kernel_size=3, padding=1),
+            nn.BatchNorm2d(32),
+            nn.LeakyReLU(negative_slope=0.01),
+            nn.Flatten(),
+            nn.Linear(2048, 256)
         )
 
         # Processes who's turn, castling ability, and en passant target squares
         self.metadata_layers = nn.Sequential(
             nn.Linear(5, 16),
-            nn.ReLU()
+            nn.LeakyReLU(negative_slope=0.01),
+            nn.LayerNorm(16)
         )
 
         self.combined_layers = nn.Sequential(
             nn.Linear(272, 32),
-            nn.ReLU(),
+            nn.LeakyReLU(negative_slope=0.01), 
+            nn.LayerNorm(32), 
             nn.Linear(32, 1)
         )
-        
+
     def forward(self, x_board, x_meta):
         x_board = self.conv_layers(x_board)
         x_meta = self.metadata_layers(x_meta)
         output = self.combined_layers(torch.cat((x_board, x_meta), dim=1))
-        print(output.shape)
         return output
-
 
 # This class handles operations regarding converting board representations to acceptable inputs to the convolutional network
 class ConvolutionInputModel:
@@ -80,7 +84,6 @@ class ConvolutionInputModel:
         board = fen_split[0]
         turn = fen_split[1]
         castling = fen_split[2]
-        #en_passant = fen_split[3]
         
         # Split the board representation by ranks (rows)
         ranks = board.split('/')
@@ -104,22 +107,41 @@ class ConvolutionInputModel:
         meta_features[3] = 1 if 'Q' in castling else 0
         meta_features[4] = 1 if 'q' in castling else 0
 
-
         return torch.from_numpy(board_features).unsqueeze(0), torch.from_numpy(meta_features).unsqueeze(0)
 
         
       
-    
+    # TODO: use a saved model to print the output of a usage of this function
     @staticmethod
-    def evaluate_fen(fen: str, model_path: str):
+    def evaluate_fen(fen: str, model_path: str, device='cuda'):
         board_features, meta_features = ConvolutionInputModel.fen_to_feature_array(fen)
 
+        # Move features to the correct device
+        board_features = board_features.to(device)
+        meta_features = meta_features.to(device)
+
         model = ChessEvaluationConvolutionalNetwork()
-        model.load_state_dict(torch.load(model_path))
+        model.load_state_dict(torch.load(model_path, map_location=device))
+        model.to(device)
         model.eval()
 
         with torch.no_grad():
-            prediction = model.forward(board_features, meta_features)
+            prediction = model(board_features, meta_features)
 
         return prediction.item()
+    
+
+
+# Example usage: evaluating a FEN string on a saved model 
+fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'  # Example FEN
+model_path = 'convolutional_network.pth'  # Path to the saved model
+
+# Evaluating the FEN using CPU or GPU-> Just gives NAN
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+evaluation_result = ConvolutionInputModel.evaluate_fen(fen, model_path, device)
+print(f"Model evaluation result: {evaluation_result}")
+
+    
+
+
     

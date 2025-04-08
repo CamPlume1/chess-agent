@@ -13,10 +13,11 @@ from app.view.gui_view import ChessGui
 initial_board = chess.Board()
 view = ChessGui(initial_board)
 
-agent1 = ABPruningStrategy(
+agent = ABPruningStrategy(
     board=None,
     evaluator=StandardEvaluator(),
-    side=None
+    side=None,
+    max_depth=3,
 )
 
 stockfish = StockfishStrategy(
@@ -30,7 +31,7 @@ stockfish = StockfishStrategy(
 
 try:
     evaluator = ChessAgentEvaluator(
-        agent=agent1,
+        agent=agent,
         agent_name="AB Pruning + Standard Evaluator",
         benchmark=stockfish,
         benchmark_name="Stockfish",
@@ -41,8 +42,7 @@ try:
     evaluator.print_summary()
 
 finally:
-    if view:
-        view.cleanup()
+    view.cleanup()
 
 svg = chess.svg.board(view.board)
 with open("final_board_state.svg", 'w') as f:

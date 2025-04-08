@@ -21,6 +21,7 @@ class ChessAgentEvaluator:
         self.agent_name = agent_name
         self.benchmark_name = benchmark_name
         self.results = {"win": 0, "loss": 0, "draw": 0}
+        self.total_moves = 0
 
     def play_game(self, agent_color="white") -> str:
         board = chess.Board()
@@ -43,6 +44,8 @@ class ChessAgentEvaluator:
         controller = GameController(white, black, board, view=self.view)
         winner = controller.play_game()
 
+        self.total_moves += len(board.move_stack)
+
         if winner == "White":
             return "1-0"
         elif winner == "Black":
@@ -52,6 +55,7 @@ class ChessAgentEvaluator:
 
     def run_match(self, n_games):
         self.results = {"win": 0, "loss": 0, "draw": 0}
+        self.total_moves = 0
         for i in range(n_games):
             agent_color = "white" if i % 2 == 0 else "black"
             result = self.play_game(agent_color=agent_color)
@@ -76,11 +80,14 @@ class ChessAgentEvaluator:
     def print_summary(self):
         diff = self.calculate_elo_diff()
         estimated_elo = self.benchmark_elo + diff
+        total_games = sum(self.results.values())
+        avg_moves = self.total_moves / total_games if total_games > 0 else 0
 
         summary = (
             f"\n=== Final Results ([{self.agent_name}] vs [{self.benchmark_name}]) ===\n"
             f"Wins: {self.results['win']}, Losses: {self.results['loss']}, Draws: {self.results['draw']}\n"
-            f"Score: {(self.results['win'] + 0.5 * self.results['draw']) / sum(self.results.values()):.3f}\n"
+            f"Average moves per game (plies): {avg_moves:.1f}\n"
+            f"Score: {(self.results['win'] + 0.5 * self.results['draw']) / total_games:.3f}\n"
             f"Estimated Elo difference vs benchmark: {diff:.2f}\n"
             f"{self.agent_name} ≈ {estimated_elo:.0f} Elo (assuming {self.benchmark_name} is {self.benchmark_elo})\n"
         )

@@ -1,4 +1,5 @@
 import chess
+import chess.svg
 from app.controller.game_controller import GameController
 from app.strategies.random_strategy import RandomStrategy
 from app.strategies.mcts_strategy import MCTSStrategy
@@ -9,13 +10,16 @@ from app.strategies.evaluators.standard_evaluator import StandardEvaluator
 from app.benchmarking.benchmark import ChessAgentEvaluator
 from app.view.gui_view import ChessGui
 
-agent = ABPruningStrategy(
+initial_board = chess.Board()
+view = ChessGui(initial_board)
+
+agent1 = ABPruningStrategy(
     board=None,
     evaluator=StandardEvaluator(),
     side=None
 )
 
-benchmark = StockfishStrategy(
+stockfish = StockfishStrategy(
     board=None,
     side=None,
     stockfish_path="/usr/local/bin/stockfish",
@@ -24,22 +28,20 @@ benchmark = StockfishStrategy(
     move_time=0.1
 )
 
-evaluator = ChessAgentEvaluator(
-    agent=agent,
-    benchmark=benchmark
-)
+try:
+    evaluator = ChessAgentEvaluator(
+        agent=agent1,
+        benchmark=stockfish,
+        benchmark_elo=1320,
+        view=view
+    )
+    evaluator.run_match(n_games=10)
+    evaluator.print_summary()
 
-chess_board = chess.Board()
-evaluator1 = StandardEvaluator()
-evaluator2 = NeuralNetworkEvaluator()
+finally:
+    if view:
+        view.cleanup()
 
-agent1 = ABPruningStrategy(board=chess_board, evaluator=evaluator1, side=chess.WHITE)
-agent2 = MCTSStrategy(board=chess_board, evaluator=evaluator2, side=chess.BLACK)
-view = ChessGui(chess_board)
-controller = GameController(agent1, agent2, chess_board, view)
-print(controller.play_game())
-view.cleanup()
-svg = chess.svg.board(chess_board)
-
+svg = chess.svg.board(view.board)
 with open("final_board_state.svg", 'w') as f:
     f.write(svg)

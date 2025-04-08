@@ -1,6 +1,8 @@
 import chess
 import math
 from app.strategies.abstrategy import Strategy
+from app.controller.game_controller import GameController 
+from app.view.gui_view import ChessGui
 
 
 class ChessAgentEvaluator:
@@ -8,34 +10,42 @@ class ChessAgentEvaluator:
         self,
         agent: Strategy,
         benchmark: Strategy,
-        benchmark_elo: int
+        benchmark_elo: int,
+        view: ChessGui,
     ):
         self.agent = agent
         self.benchmark = benchmark
         self.benchmark_elo = benchmark_elo
+        self.view = view
         self.results = {"win": 0, "loss": 0, "draw": 0}
 
     def play_game(self, agent_color="white") -> str:
         board = chess.Board()
 
+        if self.view:
+            self.view.board = board
+
+        if agent_color == "white":
+            self.agent.side = chess.WHITE
+            self.benchmark.side = chess.BLACK
+            white, black = self.agent, self.benchmark
+        else:
+            self.agent.side = chess.BLACK
+            self.benchmark.side = chess.WHITE
+            white, black = self.benchmark, self.agent
+
         self.agent.board = board
         self.benchmark.board = board
-        self.agent.side = chess.WHITE if agent_color == "white" else chess.BLACK
-        self.benchmark.side = chess.BLACK if agent_color == "white" else chess.WHITE
 
-        while not board.is_game_over():
-            if board.turn == self.agent.side:
-                move = self.agent.select_move()
-            else:
-                move = self.benchmark.select_move()
+        controller = GameController(white, black, board, view=self.view)
+        winner = controller.play_game()
 
-            if move not in board.legal_moves:
-                print(f"Illegal move attempted: {move}")
-                break
-
-            board.push(move)
-
-        return board.result()
+        if winner == "White":
+            return "1-0"
+        elif winner == "Black":
+            return "0-1"
+        else:
+            return "1/2-1/2"
 
     def run_match(self, n_games=10):
         self.results = {"win": 0, "loss": 0, "draw": 0}

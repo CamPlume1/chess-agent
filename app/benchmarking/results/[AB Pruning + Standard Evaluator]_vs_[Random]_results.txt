@@ -1,7 +1,0 @@
-
-=== Final Results ([AB Pruning + Standard Evaluator] vs [Random]) ===
-Wins: 10, Losses: 0, Draws: 0
-Average moves per game (plies): 46.5
-Score: 1.000
-Estimated Elo difference vs benchmark: inf
-AB Pruning + Standard Evaluator ≈ inf Elo (assuming Random is 500)

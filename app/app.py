@@ -43,12 +43,12 @@ try:
         benchmark_elo=500,
         view=view
     )
-    evaluator.run_match(n_games=1)
+    evaluator.run_match(n_games=10)
     evaluator.print_summary()
 
 finally:
     view.cleanup()
 
 svg = chess.svg.board(view.board)
-with open("final_board_state.svg", 'w') as f:
+with open("./app/chess_boards/final_board_state.svg", 'w') as f:
     f.write(svg)

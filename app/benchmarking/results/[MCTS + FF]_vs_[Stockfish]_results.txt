@@ -1,0 +1,8 @@
+
+=== Final Results ([MCTS + FF] vs [Stockfish]) ===
+Wins: 0, Losses: 10, Draws: 0
+Number of games: 10
+Average moves per game (plies): 45.7
+Score: 0.000
+Estimated Elo difference vs benchmark: -inf
+MCTS + FF ≈ -inf Elo (assuming Stockfish is 1320)

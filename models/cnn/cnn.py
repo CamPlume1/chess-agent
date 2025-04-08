@@ -32,10 +32,8 @@ class ChessEvaluationConvolutionalNetwork(nn.Module):
         # Process relative position of pieces
         self.conv_layers = nn.Sequential(
             nn.Conv2d(12, 18, kernel_size=3, padding=1),
-            nn.BatchNorm2d(18), 
             nn.LeakyReLU(negative_slope=0.01), 
             nn.Conv2d(18, 32, kernel_size=3, padding=1),
-            nn.BatchNorm2d(32),
             nn.LeakyReLU(negative_slope=0.01),
             nn.Flatten(),
             nn.Linear(2048, 256)
@@ -51,7 +49,6 @@ class ChessEvaluationConvolutionalNetwork(nn.Module):
         self.combined_layers = nn.Sequential(
             nn.Linear(272, 32),
             nn.LeakyReLU(negative_slope=0.01), 
-            nn.LayerNorm(32), 
             nn.Linear(32, 1)
         )
 
@@ -132,14 +129,14 @@ class ConvolutionInputModel:
     
 
 
-# Example usage: evaluating a FEN string on a saved model 
-fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'  # Example FEN
-model_path = 'convolutional_network.pth'  # Path to the saved model
+# # Example usage: evaluating a FEN string on a saved model 
+# fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'  # Example FEN
+# model_path = 'convolutional_network.pth'  # Path to the saved model
 
-# Evaluating the FEN using CPU or GPU-> Just gives NAN
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-evaluation_result = ConvolutionInputModel.evaluate_fen(fen, model_path, device)
-print(f"Model evaluation result: {evaluation_result}")
+# # Evaluating the FEN using CPU or GPU-> Just gives NAN
+# device = 'cuda' if torch.cuda.is_available() else 'cpu'
+# evaluation_result = ConvolutionInputModel.evaluate_fen(fen, model_path, device)
+# print(f"Model evaluation result: {evaluation_result}")
 
     
 

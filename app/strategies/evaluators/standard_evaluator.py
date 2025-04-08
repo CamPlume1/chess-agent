@@ -56,16 +56,11 @@ class StandardEvaluator(PositionEvaluator):
 
 
     def _pawn_structure_rewards(self, board: chess.Board) -> float:
-        """
-        Reward passed pawns and penalize doubled or isolated pawns.
-        (Note: These heuristics are simplified for illustration.)
-        """
         reward = 0
 
         # Loop over all pawns on board.
         for square, piece in board.piece_map().items():
             if piece.piece_type == chess.PAWN:
-                # For white pawns, bonus if passed; for black, penalty.
                 if piece.color == chess.WHITE:
                     if self._is_passed_pawn(board, square, chess.WHITE):
                         reward += 50
@@ -75,10 +70,6 @@ class StandardEvaluator(PositionEvaluator):
         return reward
 
     def _is_passed_pawn(self, board: chess.Board, square: int, color: bool) -> bool:
-        """
-        A simple check: a pawn is passed if there are no opposing pawns
-        in the same or adjacent files in front of it.
-        """
         file = chess.square_file(square)
         rank = chess.square_rank(square)
         direction = 1 if color == chess.WHITE else -1

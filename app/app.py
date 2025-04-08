@@ -5,6 +5,7 @@ from app.strategies.mcts_strategy import MCTSStrategy
 from app.strategies.a_b_pruning_strategy import ABPruningStrategy
 from app.strategies.stockfish_strategy import StockfishStrategy
 from app.strategies.evaluators.neural_network_evaluator import NeuralNetworkEvaluator
+from app.strategies.evaluators.convolutional_network_evaluator import ConvolutionalNetworkEvaluator
 from app.strategies.evaluators.standard_evaluator import StandardEvaluator
 from app.benchmarking.benchmark import ChessAgentEvaluator
 from app.view.gui_view import ChessGui

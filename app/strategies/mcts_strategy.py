@@ -60,8 +60,11 @@ class MCTSStrategy(Strategy):
 
             node.backpropagate(value)
 
-        best_move = max(root.children, key=lambda child: child.visits).move
-        return best_move
+        best_move = max(root.children, key=lambda child: child.visits)
+
+        print(f'MCTS selected move with value {value}')
+
+        return best_move.move
 
     def _evaluate_leaf(self, board: chess.Board, rollout_depth=4) -> float:
         sim_board = board.copy()

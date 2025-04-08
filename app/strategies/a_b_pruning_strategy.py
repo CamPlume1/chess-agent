@@ -1,25 +1,19 @@
-import random
-from chess import Board, WHITE, BLACK, Color
-from strategies.abstrategy import Strategy
-from strategies.evaluators.abstract_evaluator import PositionEvaluator
+import chess
+from app.strategies.abstrategy import Strategy
+from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 
 
-class AB_Search(Strategy):
+class ABPruningStrategy(Strategy):
 
     # Depth must be greater than 1, or function will fail.
-    def __init__(self, board: Board, positional_evaluator: PositionEvaluator, side=WHITE, max_depth=3):
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side=chess.WHITE, max_depth=4):
         super().__init__(side=side)
-        self.evaluator = positional_evaluator
+        self.evaluator = evaluator
         self.board = board
         self.max_depth= max_depth
         self.seen : dict[str: int] = {} # Uses fen representation to track seen states
 
-
     def select_move(self):
-
-        # Get list of valid moves
-        valid_moves = self.board.legal_moves
-
         # Initialize parameter states
         best_move = None
         best_value = float('-inf')
@@ -27,7 +21,7 @@ class AB_Search(Strategy):
         beta = float('inf')
 
 
-        if self.side == WHITE:
+        if self.side == chess.WHITE:
             best_value, best_move = self._a_b_maximizer(self.board, self.max_depth, alpha=alpha, beta=beta)
 
         else:
@@ -39,7 +33,7 @@ class AB_Search(Strategy):
 
     
 
-    def _a_b_maximizer(self, board: Board, depth: int, alpha: float, beta: float):
+    def _a_b_maximizer(self, board: chess.Board, depth: int, alpha: float, beta: float):
         if depth == 0 or board.is_game_over():
             return self.evaluator.evaluate(board), None
         
@@ -60,7 +54,7 @@ class AB_Search(Strategy):
                 return score, best_move
         return best_value, best_move
 
-    def _a_b_minimizer(self, board: Board, depth, alpha, beta):
+    def _a_b_minimizer(self, board: chess.Board, depth, alpha, beta):
         if depth == 0 or board.is_game_over():
             return self.evaluator.evaluate(board), None
         best_value = float('inf')

@@ -3,8 +3,6 @@ import chess
 
 
 class StandardEvaluator(PositionEvaluator):
-
-
     def evaluate(self, board: chess.Board) -> float:
         """
         Advanced board evaluation function considering:
@@ -37,6 +35,11 @@ class StandardEvaluator(PositionEvaluator):
             chess.QUEEN: 900,
             chess.KING: 10000,
         }
+
+        side_values = {
+            chess.WHITE: 1,
+            chess.BLACK: -1,
+        }
         
         # Initialize evaluation components
         material_balance = 0
@@ -45,11 +48,7 @@ class StandardEvaluator(PositionEvaluator):
         for square in chess.SQUARES:
             piece = board.piece_at(square)
             if piece:
-                value = piece_values[piece.piece_type]
-                
-                # Negative value for black pieces
-                if piece.color != chess.WHITE:
-                    value = -value
+                value = piece_values[piece.piece_type] * side_values[piece.color]
                 
                 material_balance += value
         return material_balance

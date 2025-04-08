@@ -14,7 +14,7 @@ view = ChessGui(initial_board)
 
 agent = ABPruningStrategy(
     board=None,
-    evaluator=StandardEvaluator(),
+    evaluator=NeuralNetworkEvaluator(),
     side=None,
     max_depth=3,
 )
@@ -36,7 +36,7 @@ random = RandomStrategy(
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
-        agent_name="AB + Standard",
+        agent_name="AB + FF",
         benchmark=stockfish,
         benchmark_name="Stockfish",
         benchmark_elo=1320,

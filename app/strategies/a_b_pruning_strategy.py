@@ -50,6 +50,7 @@ class ABPruningStrategy(Strategy):
                 if score > alpha:
                     alpha = score
             if score >= beta:
+                print("Prune with remaining depth: ", depth - 1)
                 return score, best_move
         return best_value, best_move
 
@@ -69,5 +70,6 @@ class ABPruningStrategy(Strategy):
                 if score < beta:
                     beta = score
             if score <= alpha:
+                print("Prune with remaining depth: ", depth - 1)
                 return score, best_move
         return best_value, best_move

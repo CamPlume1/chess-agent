@@ -100,10 +100,7 @@ class StandardEvaluator(PositionEvaluator):
         return True
 
     def _king_safety_rewards(self, board: chess.Board) -> float:
-        """
-        Reward having castling rights and penalize if the king remains uncastled
-        and stuck in the center. The idea is that castling generally improves safety.
-        """
+        # Reward castling, or at least preserving the possibility of castling
         score = 0
 
         # White king safety:

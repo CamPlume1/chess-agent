@@ -1,0 +1,7 @@
+=== Final Results ([AB + CNN] vs [Random]) ===
+Wins: 10, Losses: 0, Draws: 0
+Number of games: 10
+Average moves per game (plies): 48.5
+Score: 1.000
+Estimated Elo difference vs benchmark: inf
+AB + CNN ≈ inf Elo (assuming Random is 500)

@@ -1,0 +1,7 @@
+=== Final Results ([MCTS + CNN] vs [Random]) ===
+Wins: 9, Losses: 1, Draws: 0
+Number of games: 10
+Average moves per game (plies): 89.8
+Score: 0.900
+Estimated Elo difference vs benchmark: 381.70
+MCTS + CNN ≈ 882 Elo (assuming Random is 500)

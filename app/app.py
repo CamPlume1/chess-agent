@@ -17,7 +17,7 @@ agent = ABPruningStrategy(
     board=None,
     evaluator=NeuralNetworkEvaluator(),
     side=None,
-    max_depth=3,
+    max_depth=3
 )
 
 stockfish = StockfishStrategy(
@@ -37,10 +37,10 @@ random = RandomStrategy(
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
-        agent_name="AB + FF",
-        benchmark=stockfish,
-        benchmark_name="Stockfish",
-        benchmark_elo=1320,
+        agent_name="AB + FFN",
+        benchmark=random,
+        benchmark_name="Random",
+        benchmark_elo=500,
         view=view
     )
     evaluator.run_match(n_games=10)

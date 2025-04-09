@@ -1,0 +1,7 @@
+=== Final Results ([MCTS + Standard] vs [Random]) ===
+Wins: 4, Losses: 0, Draws: 6
+Number of games: 10
+Average moves per game (plies): 225.3
+Score: 0.700
+Estimated Elo difference vs benchmark: 147.19
+MCTS + Standard ≈ 647 Elo (assuming Random is 500)

@@ -13,9 +13,9 @@ from app.view.gui_view import ChessGui
 initial_board = chess.Board()
 view = ChessGui(initial_board)
 
-agent = ABPruningStrategy(
+agent = MCTSStrategy(
     board=None,
-    evaluator=NeuralNetworkEvaluator(),
+    evaluator=ConvolutionalNetworkEvaluator(),
     side=None,
     max_depth=3
 )

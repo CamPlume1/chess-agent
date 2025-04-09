@@ -37,7 +37,7 @@ random = RandomStrategy(
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
-        agent_name="AB + FFN",
+        agent_name="AB + FF",
         benchmark=random,
         benchmark_name="Random",
         benchmark_elo=500,

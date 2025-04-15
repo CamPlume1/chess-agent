@@ -26,7 +26,8 @@ class ChessAgentEvaluator:
         self.results = {"win": 0, "loss": 0, "draw": 0}
         self.total_moves = 0
         self.centipawn_benchmark = centipawn_benchmark
-        self.centipawn_loss = 0
+        self.agent_centipawn_loss = 0
+        self.benchmark_centipawn_loss = 0
 
     def play_game(self, agent_color="white") -> str:
         board = chess.Board()
@@ -50,7 +51,8 @@ class ChessAgentEvaluator:
         result = controller.play_game(centipawn_benchmark=self.centipawn_benchmark)
         winner = result["result"]
         print(f'\n\n\nResult: {result}\n\n\n')
-        self.centipawn_loss += result["white_average_centipawn_loss"] if self.agent.side == WHITE else result["black_average_centipawn_loss"]
+        self.agent_centipawn_loss += result["white_average_centipawn_loss"] if self.agent.side == WHITE else result["black_average_centipawn_loss"]
+        self.benchmark_centipawn_loss += result["black_average_centipawn_loss"] if self.agent.side == WHITE else result["white_average_centipawn_loss"]
 
         self.total_moves += len(board.move_stack)
 
@@ -78,7 +80,8 @@ class ChessAgentEvaluator:
             self.results[outcome] += 1
             print(f"Game {i + 1}: {result} → {outcome}")
 
-        self.centipawn_loss /= n_games
+        self.agent_centipawn_loss /= n_games
+        self.benchmark_centipawn_loss /= n_games
 
     def calculate_elo_diff(self) -> float:
         total = sum(self.results.values())
@@ -98,7 +101,8 @@ class ChessAgentEvaluator:
             f"Wins: {self.results['win']}, Losses: {self.results['loss']}, Draws: {self.results['draw']}\n"
             f"Number of games: {total_games}\n"
             f"Average moves per game (plies): {avg_moves:.1f}\n"
-            f"Average centipawn loss per move: {self.centipawn_loss:.3f}\n"
+            f"Agent average centipawn loss per move: {self.agent_centipawn_loss:.3f}\n"
+            f"Benchmark average centipawn loss per move: {self.benchmark_centipawn_loss:.3f}\n"
             f"Score: {(self.results['win'] + 0.5 * self.results['draw']) / total_games:.3f}\n"
             f"Estimated Elo difference vs benchmark: {diff:.2f}\n"
             f"{self.agent_name} ≈ {estimated_elo:.0f} Elo (assuming {self.benchmark_name} is {self.benchmark_elo})\n"

@@ -41,7 +41,7 @@ class StockfishStrategy(Strategy):
         score = info["score"].white()
 
         if score.is_mate():
-            return 100000 if score.mate() > 0 else -100000
+            return 10000 if score.mate() > 0 else -10000
         else:
             return score.cp
 

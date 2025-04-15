@@ -69,10 +69,10 @@ class ConvolutionInputModel:
     def fen_to_feature_array(fen: str):
 
         # Piece encodings. Lowercase = black, n = knight
-        PIECES_TO_CHANNEL =   piece_to_plane = {
-                'P': 0, 'N': 1, 'B': 2, 'R': 3, 'Q': 4, 'K': 5,
-                'p': 6, 'n': 7, 'b': 8, 'r': 9, 'q': 10, 'k': 11
-            }
+        PIECES_TO_CHANNEL = {
+            'P': 0, 'N': 1, 'B': 2, 'R': 3, 'Q': 4, 'K': 5,
+            'p': 6, 'n': 7, 'b': 8, 'r': 9, 'q': 10, 'k': 11
+        }
 
         # Initialize empty 12×8×8 array (all zeros)
         board_features = np.zeros((12, 8, 8), dtype=np.float32)

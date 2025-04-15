@@ -1,5 +1,6 @@
 import chess
 import chess.svg
+from app.controller.game_controller import GameController
 from app.strategies.random_strategy import RandomStrategy
 from app.strategies.mcts_strategy import MCTSStrategy
 from app.strategies.a_b_pruning_strategy import ABPruningStrategy
@@ -49,6 +50,5 @@ try:
 finally:
     view.cleanup()
 
-svg = chess.svg.board(view.board)
-with open("./app/chess_boards/final_board_state.svg", 'w') as f:
+with open("final_board_state.svg", 'w') as f:
     f.write(svg)

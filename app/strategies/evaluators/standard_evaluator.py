@@ -154,13 +154,15 @@ class StandardEvaluator(PositionEvaluator):
         for square, piece in board.piece_map().items():
             rank = chess.square_rank(square)
             file = chess.square_file(square)
-
+            table = None
             if piece.piece_type == chess.KNIGHT:
                 table = knight_table
             elif piece.piece_type == chess.PAWN:
                 table = pawn_table
             elif piece.piece_type == chess.BISHOP:
                 table = bishop_table
+            else:
+                continue
 
             if piece.color == chess.WHITE:
                 score += table[rank][file]

@@ -23,7 +23,7 @@ class GameController:
             self.board.push(move)
             if self.view:
                 self.view.print_board()
-                #time.sleep(1) 
+                time.sleep(1) 
             if self.current_agent is self.white:
                 self.current_agent = self.black
             else:

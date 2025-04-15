@@ -1,8 +1,10 @@
 
 === Final Results ([AB + Standard] vs [Stockfish]) ===
-Wins: 2, Losses: 8, Draws: 0
-Number of games: 10
-Average moves per game (plies): 88.3
-Score: 0.200
-Estimated Elo difference vs benchmark: -240.82
-AB + Standard ≈ 1079 Elo (assuming Stockfish is 1320)
+Wins: 1, Losses: 24, Draws: 0
+Number of games: 25
+Average moves per game (plies): 92.6
+Agent average centipawn loss per move: 371.271
+Benchmark average centipawn loss per move: 480.334
+Score: 0.040
+Estimated Elo difference vs benchmark: -552.08
+AB + Standard ≈ 768 Elo (assuming Stockfish is 1320)

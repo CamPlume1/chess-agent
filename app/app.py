@@ -17,7 +17,7 @@ agent = ABPruningStrategy(
     board=None,
     evaluator=StandardEvaluator(),
     side=None,
-    max_depth=4
+    max_depth=3
 )
 
 stockfish = StockfishStrategy(
@@ -53,7 +53,7 @@ try:
         view=view,
         centipawn_benchmark=centipawn_benchmark
     )
-    evaluator.run_match(n_games=1)
+    evaluator.run_match(n_games=25)
     evaluator.print_summary()
 
 finally:

@@ -1,8 +1,10 @@
 
 === Final Results ([AB + CNN] vs [Stockfish]) ===
-Wins: 0, Losses: 10, Draws: 0
-Number of games: 10
-Average moves per game (plies): 78.7
+Wins: 0, Losses: 25, Draws: 0
+Number of games: 25
+Average moves per game (plies): 71.7
+Agent average centipawn loss per move: 491.449
+Benchmark average centipawn loss per move: 623.433
 Score: 0.000
 Estimated Elo difference vs benchmark: -inf
 AB + CNN ≈ -inf Elo (assuming Stockfish is 1320)

@@ -15,7 +15,7 @@ view = ChessGui(initial_board)
 
 agent = ABPruningStrategy(
     board=None,
-    evaluator=StandardEvaluator(),
+    evaluator=NeuralNetworkEvaluator(),
     side=None,
     max_depth=3
 )
@@ -46,7 +46,7 @@ centipawn_benchmark = StockfishStrategy(
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
-        agent_name="AB + Standard",
+        agent_name="AB + FF",
         benchmark=random,
         benchmark_name="Random",
         benchmark_elo=500,

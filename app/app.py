@@ -13,11 +13,10 @@ from app.view.gui_view import ChessGui
 initial_board = chess.Board()
 view = ChessGui(initial_board)
 
-agent = ABPruningStrategy(
+agent = MCTSStrategy(
     board=None,
-    evaluator=ConvolutionalNetworkEvaluator(),
+    evaluator=StandardEvaluator(),
     side=None,
-    max_depth=3
 )
 
 stockfish = StockfishStrategy(
@@ -46,7 +45,7 @@ centipawn_benchmark = StockfishStrategy(
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
-        agent_name="AB + CNN",
+        agent_name="MCTS + Standard",
         benchmark=random,
         benchmark_name="Random",
         benchmark_elo=500,

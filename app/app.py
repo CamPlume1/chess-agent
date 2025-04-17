@@ -16,7 +16,7 @@ view = None
 
 agent = MCTSStrategy(
     board=None,
-    evaluator=StandardEvaluator(),
+    evaluator=NeuralNetworkEvaluator(),
     side=None,
 )
 
@@ -52,7 +52,7 @@ centipawn_benchmark = StockfishStrategy(
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
-        agent_name="MCTS + Standard",
+        agent_name="MCTS + FF",
         benchmark=agent2,
         benchmark_name="MCTS + CNN",
         benchmark_elo=900,

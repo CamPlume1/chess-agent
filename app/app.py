@@ -16,9 +16,8 @@ view = ChessGui(initial_board)
 
 agent = MCTSStrategy(
     board=None,
-    evaluator=ConvolutionalNetworkEvaluator(),
+    evaluator=StandardEvaluator(),
     side=None,
-    max_depth=3
 )
 
 stockfish = StockfishStrategy(
@@ -35,16 +34,26 @@ random = RandomStrategy(
     side=None
 )
 
+centipawn_benchmark = StockfishStrategy(
+    board=None,
+    side=None,
+    stockfish_path="/usr/local/bin/stockfish",
+    skill_level=20,
+    uci_elo=3000,
+    move_time=0.1
+)
+
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
-        agent_name="AB + FF",
-        benchmark=random,
-        benchmark_name="Random",
-        benchmark_elo=500,
-        view=view
+        agent_name="MCTS + Standard",
+        benchmark=stockfish,
+        benchmark_name="Stockfish",
+        benchmark_elo=1320,
+        view=view,
+        centipawn_benchmark=centipawn_benchmark
     )
-    evaluator.run_match(n_games=10)
+    evaluator.run_match(n_games=25)
     evaluator.print_summary()
 
 finally:

@@ -1,6 +1,8 @@
 import chess
 import math
+from chess import WHITE
 from app.strategies.abstrategy import Strategy
+from app.strategies.stockfish_strategy import StockfishStrategy
 from app.controller.game_controller import GameController
 from app.view.gui_view import ChessGui
 
@@ -12,7 +14,8 @@ class ChessAgentEvaluator:
         benchmark_elo: int,
         view: ChessGui,
         agent_name: str,
-        benchmark_name: str
+        benchmark_name: str,
+        centipawn_benchmark: StockfishStrategy
     ):
         self.agent = agent
         self.benchmark = benchmark
@@ -22,6 +25,9 @@ class ChessAgentEvaluator:
         self.benchmark_name = benchmark_name
         self.results = {"win": 0, "loss": 0, "draw": 0}
         self.total_moves = 0
+        self.centipawn_benchmark = centipawn_benchmark
+        self.agent_centipawn_loss = 0
+        self.benchmark_centipawn_loss = 0
 
     def play_game(self, agent_color="white") -> str:
         board = chess.Board()
@@ -42,7 +48,11 @@ class ChessAgentEvaluator:
         self.benchmark.board = board
 
         controller = GameController(white, black, board, view=self.view)
-        winner = controller.play_game()
+        result = controller.play_game(centipawn_benchmark=self.centipawn_benchmark)
+        winner = result["result"]
+        print(f'\n\n\nResult: {result}\n\n\n')
+        self.agent_centipawn_loss += result["white_average_centipawn_loss"] if self.agent.side == WHITE else result["black_average_centipawn_loss"]
+        self.benchmark_centipawn_loss += result["black_average_centipawn_loss"] if self.agent.side == WHITE else result["white_average_centipawn_loss"]
 
         self.total_moves += len(board.move_stack)
 
@@ -70,6 +80,9 @@ class ChessAgentEvaluator:
             self.results[outcome] += 1
             print(f"Game {i + 1}: {result} → {outcome}")
 
+        self.agent_centipawn_loss /= n_games
+        self.benchmark_centipawn_loss /= n_games
+
     def calculate_elo_diff(self) -> float:
         total = sum(self.results.values())
         score = (self.results["win"] + 0.5 * self.results["draw"]) / total
@@ -88,6 +101,8 @@ class ChessAgentEvaluator:
             f"Wins: {self.results['win']}, Losses: {self.results['loss']}, Draws: {self.results['draw']}\n"
             f"Number of games: {total_games}\n"
             f"Average moves per game (plies): {avg_moves:.1f}\n"
+            f"Agent average centipawn loss per move: {self.agent_centipawn_loss:.3f}\n"
+            f"Benchmark average centipawn loss per move: {self.benchmark_centipawn_loss:.3f}\n"
             f"Score: {(self.results['win'] + 0.5 * self.results['draw']) / total_games:.3f}\n"
             f"Estimated Elo difference vs benchmark: {diff:.2f}\n"
             f"{self.agent_name} ≈ {estimated_elo:.0f} Elo (assuming {self.benchmark_name} is {self.benchmark_elo})\n"

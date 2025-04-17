@@ -34,6 +34,16 @@ class StockfishStrategy(Strategy):
         self._ensure_engine()
         result = self._engine.play(self.board, chess.engine.Limit(time=self.move_time))
         return result.move
+    
+    def get_centipawn_analysis(self) -> int:
+        self._ensure_engine()
+        info = self._engine.analyse(self.board, chess.engine.Limit(time=self.move_time))
+        score = info["score"].white()
+
+        if score.is_mate():
+            return 10000 if score.mate() > 0 else -10000
+        else:
+            return score.cp
 
     def __del__(self):
         try:

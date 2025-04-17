@@ -1,8 +1,10 @@
 
 === Final Results ([MCTS + CNN] vs [Stockfish]) ===
-Wins: 0, Losses: 10, Draws: 0
-Number of games: 10
-Average moves per game (plies): 27.3
+Wins: 0, Losses: 25, Draws: 0
+Number of games: 25
+Average moves per game (plies): 30.0
+Agent average centipawn loss per move: 1102.075
+Benchmark average centipawn loss per move: 292.900
 Score: 0.000
 Estimated Elo difference vs benchmark: -inf
 MCTS + CNN ≈ -inf Elo (assuming Stockfish is 1320)

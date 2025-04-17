@@ -1,8 +1,10 @@
 
 === Final Results ([MCTS + FF] vs [Random]) ===
-Wins: 2, Losses: 2, Draws: 6
-Number of games: 10
-Average moves per game (plies): 255.6
-Score: 0.500
-Estimated Elo difference vs benchmark: -0.00
-MCTS + FF ≈ 500 Elo (assuming Random is 500)
+Wins: 11, Losses: 2, Draws: 12
+Number of games: 25
+Average moves per game (plies): 225.3
+Agent average centipawn loss per move: 1284.645
+Benchmark average centipawn loss per move: 1075.337
+Score: 0.680
+Estimated Elo difference vs benchmark: 130.94
+MCTS + FF ≈ 631 Elo (assuming Random is 500)

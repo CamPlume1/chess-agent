@@ -11,11 +11,18 @@ from app.benchmarking.benchmark import ChessAgentEvaluator
 from app.view.gui_view import ChessGui
 
 initial_board = chess.Board()
-view = ChessGui(initial_board)
+#view = ChessGui(initial_board)
+view = None
 
 agent = MCTSStrategy(
     board=None,
     evaluator=StandardEvaluator(),
+    side=None,
+)
+
+agent2 = MCTSStrategy(
+    board=None,
+    evaluator=NeuralNetworkEvaluator(),
     side=None,
 )
 
@@ -46,9 +53,9 @@ try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
         agent_name="MCTS + Standard",
-        benchmark=stockfish,
-        benchmark_name="Stockfish",
-        benchmark_elo=1320,
+        benchmark=agent2,
+        benchmark_name="MCTS + FF",
+        benchmark_elo=900,
         view=view,
         centipawn_benchmark=centipawn_benchmark
     )
@@ -56,8 +63,10 @@ try:
     evaluator.print_summary()
 
 finally:
-    view.cleanup()
+    if view:
+        view.cleanup()
 
-svg = chess.svg.board(view.board)
-with open("./app/chess_boards/final_board_state.svg", 'w') as f:
-    f.write(svg)
+if view:
+    svg = chess.svg.board(view.board)
+    with open("./app/chess_boards/final_board_state.svg", 'w') as f:
+        f.write(svg)

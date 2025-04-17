@@ -1,8 +1,10 @@
 
 === Final Results ([MCTS + CNN] vs [Random]) ===
-Wins: 9, Losses: 1, Draws: 0
-Number of games: 10
-Average moves per game (plies): 89.8
-Score: 0.900
-Estimated Elo difference vs benchmark: 381.70
-MCTS + CNN ≈ 882 Elo (assuming Random is 500)
+Wins: 19, Losses: 3, Draws: 3
+Number of games: 25
+Average moves per game (plies): 117.8
+Agent average centipawn loss per move: 1070.932
+Benchmark average centipawn loss per move: 1153.387
+Score: 0.820
+Estimated Elo difference vs benchmark: 263.42
+MCTS + CNN ≈ 763 Elo (assuming Random is 500)

@@ -15,7 +15,7 @@ view = ChessGui(initial_board)
 
 agent = MCTSStrategy(
     board=None,
-    evaluator=StandardEvaluator(),
+    evaluator=NeuralNetworkEvaluator(),
     side=None,
 )
 
@@ -45,7 +45,7 @@ centipawn_benchmark = StockfishStrategy(
 try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
-        agent_name="MCTS + Standard",
+        agent_name="MCTS + FF",
         benchmark=random,
         benchmark_name="Random",
         benchmark_elo=500,

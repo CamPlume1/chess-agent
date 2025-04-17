@@ -46,9 +46,9 @@ try:
     evaluator = ChessAgentEvaluator(
         agent=agent,
         agent_name="MCTS + CNN",
-        benchmark=random,
-        benchmark_name="Random",
-        benchmark_elo=500,
+        benchmark=stockfish,
+        benchmark_name="Stockfish",
+        benchmark_elo=1320,
         view=view,
         centipawn_benchmark=centipawn_benchmark
     )

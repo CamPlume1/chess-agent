@@ -5,6 +5,7 @@ from app.strategies.abstrategy import Strategy
 from app.strategies.stockfish_strategy import StockfishStrategy
 from app.controller.game_controller import GameController
 from app.view.gui_view import ChessGui
+import matplotlib.pyplot as plt
 
 class ChessAgentEvaluator:
     def __init__(
@@ -15,7 +16,8 @@ class ChessAgentEvaluator:
         view: ChessGui,
         agent_name: str,
         benchmark_name: str,
-        centipawn_benchmark: StockfishStrategy
+        centipawn_benchmark: StockfishStrategy,
+        view_game_progression: bool = False
     ):
         self.agent = agent
         self.benchmark = benchmark
@@ -28,6 +30,8 @@ class ChessAgentEvaluator:
         self.centipawn_benchmark = centipawn_benchmark
         self.agent_centipawn_loss = 0
         self.benchmark_centipawn_loss = 0
+        self.view_game_progression = view_game_progression
+        self.game_progression = []
 
     def play_game(self, agent_color="white") -> str:
         board = chess.Board()
@@ -53,6 +57,7 @@ class ChessAgentEvaluator:
         print(f'\n\n\nResult: {result}\n\n\n')
         self.agent_centipawn_loss += result["white_average_centipawn_loss"] if self.agent.side == WHITE else result["black_average_centipawn_loss"]
         self.benchmark_centipawn_loss += result["black_average_centipawn_loss"] if self.agent.side == WHITE else result["white_average_centipawn_loss"]
+        self.game_progression = result["game_analysis_progression"]
 
         self.total_moves += len(board.move_stack)
 
@@ -103,6 +108,7 @@ class ChessAgentEvaluator:
             f"Average moves per game (plies): {avg_moves:.1f}\n"
             f"Agent average centipawn loss per move: {self.agent_centipawn_loss:.3f}\n"
             f"Benchmark average centipawn loss per move: {self.benchmark_centipawn_loss:.3f}\n"
+            f"Game analysis progression: {self.game_progression}\n"
             f"Score: {(self.results['win'] + 0.5 * self.results['draw']) / total_games:.3f}\n"
             f"Estimated Elo difference vs benchmark: {diff:.2f}\n"
             f"{self.agent_name} approx equal {estimated_elo:.0f} Elo (assuming {self.benchmark_name} is {self.benchmark_elo})\n"
@@ -110,6 +116,25 @@ class ChessAgentEvaluator:
 
         print(summary)
 
-        filename = f"./app/benchmarking/results/cam_1/[{self.agent_name}]_vs_[{self.benchmark_name}]_results.txt"
+        filename = f"./app/benchmarking/results/[{self.agent_name}]_vs_[{self.benchmark_name}]_results.txt"
         with open(filename, 'w') as f:
             f.write(summary)
+
+        if self.view_game_progression:
+            x = list(range(len(self.game_progression)))
+            fig, ax = plt.subplots()
+            for i in range(len(self.game_progression)):
+                ax.plot(x[i], self.game_progression[i], 'o', color='white' if i % 2 == 0 else 'black')
+                if i < len(self.game_progression) - 1:
+                    ax.plot(x[i:i+2], self.game_progression[i:i+2], color='white' if i % 2 == 0 else 'black')
+
+            ax.set_xlabel("Half Moves")
+            ax.set_ylabel("Centipawn Evaluation")
+            ax.set_ylim(-1100, 1100)
+            ax.set_yticks(range(-1000, 1000 + 1, 100))
+            ax.set_title(f"[{self.agent_name}] vs [{self.benchmark_name}] Sample Game Progression")
+
+            ax.set_facecolor("gray")
+            fig.patch.set_facecolor("gray")
+
+            plt.savefig(f"./app/benchmarking/results/[{self.agent_name}]_vs_[{self.benchmark_name}]_game_progression.png")

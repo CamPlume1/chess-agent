@@ -22,7 +22,7 @@ agent = MCTSStrategy(
 
 agent2 = MCTSStrategy(
     board=None,
-    evaluator=NeuralNetworkEvaluator(),
+    evaluator=ConvolutionalNetworkEvaluator(),
     side=None,
 )
 
@@ -54,7 +54,7 @@ try:
         agent=agent,
         agent_name="MCTS + Standard",
         benchmark=agent2,
-        benchmark_name="MCTS + FF",
+        benchmark_name="MCTS + CNN",
         benchmark_elo=900,
         view=view,
         centipawn_benchmark=centipawn_benchmark

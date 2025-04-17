@@ -27,7 +27,6 @@ class ABPruningStrategy(Strategy):
             best_value, best_move = self._a_b_minimizer(self.board, self.max_depth, alpha=alpha, beta=beta)
 
 
-        print(f"Selected move with value: {best_value}")
         return best_move
 
     

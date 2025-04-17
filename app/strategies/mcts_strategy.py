@@ -61,7 +61,6 @@ class MCTSStrategy(Strategy):
 
         best_move = max(root.children, key=lambda child: child.visits)
 
-        print(f'MCTS selected move with value {value}')
 
         return best_move.move
 

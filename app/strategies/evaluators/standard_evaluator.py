@@ -12,8 +12,6 @@ class StandardEvaluator(PositionEvaluator):
         - Piece mobility
         """
         if board.is_game_over():
-            print("End State Found")
-            print("State Evaluation: ", super()._game_over_evaluation(board))
             return super()._game_over_evaluation(board)
         
         score = 0

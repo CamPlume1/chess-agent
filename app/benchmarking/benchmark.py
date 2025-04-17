@@ -105,11 +105,11 @@ class ChessAgentEvaluator:
             f"Benchmark average centipawn loss per move: {self.benchmark_centipawn_loss:.3f}\n"
             f"Score: {(self.results['win'] + 0.5 * self.results['draw']) / total_games:.3f}\n"
             f"Estimated Elo difference vs benchmark: {diff:.2f}\n"
-            f"{self.agent_name} ≈ {estimated_elo:.0f} Elo (assuming {self.benchmark_name} is {self.benchmark_elo})\n"
+            f"{self.agent_name} approx equal {estimated_elo:.0f} Elo (assuming {self.benchmark_name} is {self.benchmark_elo})\n"
         )
 
         print(summary)
 
-        filename = f"./app/benchmarking/results/[{self.agent_name}]_vs_[{self.benchmark_name}]_results.txt"
+        filename = f"./app/benchmarking/results/cam_1/[{self.agent_name}]_vs_[{self.benchmark_name}]_results.txt"
         with open(filename, 'w') as f:
             f.write(summary)

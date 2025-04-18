@@ -23,10 +23,12 @@ class GameController:
         white_centipawn_loss = 0
         black_centipawn_loss = 0
 
+        game_analysis_progression = [0]
+
         result = {}
 
         while not self.board.is_game_over():
-            if len(self.board.move_stack) // 2 > 100:
+            if len(self.board.move_stack) // 2 > 80:
                 centipawn_benchmark.board = self.board
                 stockfish_evaluation = centipawn_benchmark.get_centipawn_analysis()
 
@@ -41,8 +43,6 @@ class GameController:
 
                 break
 
-            print("Game iteration")
-
             board_before = self.board.copy()
 
             centipawn_benchmark.board = board_before
@@ -55,9 +55,11 @@ class GameController:
             self.board.push(move)
             actual_move_centipawn = centipawn_benchmark.get_centipawn_analysis()
 
+            clamped_actual_move_centipawn = min(abs(actual_move_centipawn), 1000) * (1 if actual_move_centipawn > 0 else -1)
+            game_analysis_progression.append(clamped_actual_move_centipawn)
+
             if self.view:
                 self.view.print_board()
-                #time.sleep(1) 
             if self.current_agent is self.white:
                 white_centipawn_loss += top_engine_move_centipawn - actual_move_centipawn
                 self.current_agent = self.black
@@ -69,6 +71,7 @@ class GameController:
         result["white_average_centipawn_loss"] = white_centipawn_loss / (len(self.board.move_stack) / 2)
         result["black_total_centipawn_loss"] = black_centipawn_loss
         result["black_average_centipawn_loss"] = black_centipawn_loss / (len(self.board.move_stack) / 2)
+        result["game_analysis_progression"] = game_analysis_progression[:-1]
 
         # Determine the game result
         if self.board.is_checkmate():

@@ -6,7 +6,7 @@ from app.strategies.evaluators.abstract_evaluator import PositionEvaluator
 class ABPruningStrategy(Strategy):
 
     # Depth must be greater than 1, or function will fail.
-    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side=chess.WHITE, max_depth=4):
+    def __init__(self, board: chess.Board, evaluator: PositionEvaluator, side=chess.WHITE, max_depth=3):
         super().__init__(board=board, side=side)
         self.evaluator = evaluator
         self.max_depth= max_depth
@@ -27,7 +27,6 @@ class ABPruningStrategy(Strategy):
             best_value, best_move = self._a_b_minimizer(self.board, self.max_depth, alpha=alpha, beta=beta)
 
 
-        print(f"Selected move with value: {best_value}")
         return best_move
 
     

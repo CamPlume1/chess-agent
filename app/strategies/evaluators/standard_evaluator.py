@@ -12,8 +12,6 @@ class StandardEvaluator(PositionEvaluator):
         - Piece mobility
         """
         if board.is_game_over():
-            print("End State Found")
-            print("State Evaluation: ", super()._game_over_evaluation(board))
             return super()._game_over_evaluation(board)
         
         score = 0
@@ -96,25 +94,26 @@ class StandardEvaluator(PositionEvaluator):
 
         # White king safety:
         if board.has_kingside_castling_rights(chess.WHITE) or board.has_queenside_castling_rights(chess.WHITE):
-            score += 30
+            score += 15
         else:
             white_king_square = board.king(chess.WHITE)
             # Penalize if the white king is in a central square - Not a safe space traditionally
-            if white_king_square in [chess.E1, chess.D1]:
-                score -= 50
+            if white_king_square in [chess.E1, chess.D1, chess.E2, chess.D2, chess.C2, chess.F2]:
+                score -= 35
 
         # Black king safety:
         if board.has_kingside_castling_rights(chess.BLACK) or board.has_queenside_castling_rights(chess.BLACK):
-            score -= 30
+            score -= 15
         else:
             black_king_square = board.king(chess.BLACK)
-            if black_king_square in [chess.E8, chess.D8]:
-                score += 50
+            if black_king_square in [chess.E8, chess.D8, chess.E7, chess.D7, chess.F7, chess.C7]:
+                score += 35
 
         return score
 
     def _piece_positioning_reward(self, board: chess.Board) -> float:
-        # Right now only includes knights, but will extend to other pieces to try and control the center
+        # Positional bonuses for knights, pawns, and bishops. Uses a gradient matrix to incentivize certain positions, which should
+        # help agent in early and middle games
         score = 0
 
         knight_table = [
@@ -128,13 +127,45 @@ class StandardEvaluator(PositionEvaluator):
             [-50, -40, -30, -30, -30, -30, -40, -50]
         ]
 
+        pawn_table = [
+            [ 0,   0,   0,   0,   0,   0,   0,   0],
+            [50,  50,  50,  50,  50,  50,  50,  50],
+            [10,  10,  20,  30,  30,  20,  10,  10],
+            [ 5,   5,  10,  25,  25,  10,   5,   5],
+            [ 0,   0,   0,  20,  20,   0,   0,   0],
+            [ 5,  -5, -10,   0,   0, -10,  -5,   5],
+            [ 5,  10,  10, -20, -20,  10,  10,   5],
+            [ 0,   0,   0,   0,   0,   0,   0,   0]
+        ]
+
+        bishop_table = [
+            [-20, -10, -10, -10, -10, -10, -10, -20],
+            [-10,   5,   0,   0,   0,   0,   5, -10],
+            [-10,  10,  10,  10,  10,  10,  10, -10],
+            [-10,   0,  10,  10,  10,  10,   0, -10],
+            [-10,   5,   5,  10,  10,   5,   5, -10],
+            [-10,   0,   5,  10,  10,   5,   0, -10],
+            [-10,   0,   0,   0,   0,   0,   0, -10],
+            [-20, -10, -10, -10, -10, -10, -10, -20]
+        ]
+
         for square, piece in board.piece_map().items():
+            rank = chess.square_rank(square)
+            file = chess.square_file(square)
+            table = None
             if piece.piece_type == chess.KNIGHT:
-                rank = chess.square_rank(square)
-                file = chess.square_file(square)
-                if piece.color == chess.WHITE:
-                    score += knight_table[rank][file]
-                else:
-                    # For black, flip the table vertically.
-                    score -= knight_table[7 - rank][file]
+                table = knight_table
+            elif piece.piece_type == chess.PAWN:
+                table = pawn_table
+            elif piece.piece_type == chess.BISHOP:
+                table = bishop_table
+            else:
+                continue
+
+            if piece.color == chess.WHITE:
+                score += table[rank][file]
+            else:
+                score -= table[7 - rank][file]
+
         return score
+

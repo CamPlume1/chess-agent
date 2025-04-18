@@ -41,7 +41,6 @@ class GameController:
 
                 break
 
-
             board_before = self.board.copy()
 
             centipawn_benchmark.board = board_before

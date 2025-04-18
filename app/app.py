@@ -392,8 +392,10 @@ matchup_27 = ChessAgentEvaluator(
 cam_matchups = [matchup_1, matchup_2, matchup_3, matchup_4, matchup_5, matchup_6, matchup_7, matchup_8, matchup_9, matchup_10, matchup_11, matchup_12]
 adam_matchups = [matchup_13, matchup_14, matchup_15, matchup_16, matchup_17, matchup_18, matchup_19, matchup_20, matchup_21, matchup_22, matchup_23, matchup_24, matchup_25, matchup_26, matchup_27, matchup_27]
 
-for i in range(len(cam_matchups)):
+MATCHUPS_TO_RUN = adam_matchups
+
+for i in range(len(MATCHUPS_TO_RUN)):
     print(f"Beginning matchup {i + 1}")
-    cam_matchups[i].run_match(n_games=1)
-    cam_matchups[i].print_summary()
+    MATCHUPS_TO_RUN[i].run_match(n_games=1)
+    MATCHUPS_TO_RUN[i].print_summary()
 

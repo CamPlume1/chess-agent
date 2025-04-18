@@ -31,7 +31,7 @@ class ChessAgentEvaluator:
         self.agent_centipawn_loss = 0
         self.benchmark_centipawn_loss = 0
         self.view_game_progression = view_game_progression
-        self.game_progression = []
+        self.game_progression = None
 
     def play_game(self, agent_color="white") -> str:
         board = chess.Board()
@@ -57,7 +57,8 @@ class ChessAgentEvaluator:
         print(f'\n\n\nResult: {result}\n\n\n')
         self.agent_centipawn_loss += result["white_average_centipawn_loss"] if self.agent.side == WHITE else result["black_average_centipawn_loss"]
         self.benchmark_centipawn_loss += result["black_average_centipawn_loss"] if self.agent.side == WHITE else result["white_average_centipawn_loss"]
-        self.game_progression = result["game_analysis_progression"]
+        if not self.game_progression:
+            self.game_progression = result["game_analysis_progression"]
 
         self.total_moves += len(board.move_stack)
 

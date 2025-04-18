@@ -271,7 +271,8 @@ matchup_16 = ChessAgentEvaluator(
     benchmark_elo=500,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_17 = ChessAgentEvaluator(
@@ -282,7 +283,8 @@ matchup_17 = ChessAgentEvaluator(
     benchmark_elo=500,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_18 = ChessAgentEvaluator(
@@ -293,7 +295,8 @@ matchup_18 = ChessAgentEvaluator(
     benchmark_elo=500,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_19 = ChessAgentEvaluator(
@@ -304,7 +307,8 @@ matchup_19 = ChessAgentEvaluator(
     benchmark_elo=500,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_20 = ChessAgentEvaluator(
@@ -315,7 +319,8 @@ matchup_20 = ChessAgentEvaluator(
     benchmark_elo=500,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_21 = ChessAgentEvaluator(
@@ -326,7 +331,8 @@ matchup_21 = ChessAgentEvaluator(
     benchmark_elo=500,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_22 = ChessAgentEvaluator(
@@ -337,7 +343,8 @@ matchup_22 = ChessAgentEvaluator(
     benchmark_elo=1320,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_23 = ChessAgentEvaluator(
@@ -348,7 +355,8 @@ matchup_23 = ChessAgentEvaluator(
     benchmark_elo=1320,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_24 = ChessAgentEvaluator(
@@ -359,7 +367,8 @@ matchup_24 = ChessAgentEvaluator(
     benchmark_elo=1320,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_25 = ChessAgentEvaluator(
@@ -370,7 +379,8 @@ matchup_25 = ChessAgentEvaluator(
     benchmark_elo=1320,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_26 = ChessAgentEvaluator(
@@ -381,7 +391,8 @@ matchup_26 = ChessAgentEvaluator(
     benchmark_elo=1320,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 matchup_27 = ChessAgentEvaluator(
@@ -392,7 +403,8 @@ matchup_27 = ChessAgentEvaluator(
     benchmark_elo=1320,
     view=None,
     centipawn_benchmark=centipawn_benchmark,
-    view_game_progression=True
+    view_game_progression=True,
+    limit_game_duration=False
 )
 
 cam_matchups = [matchup_1, matchup_2, matchup_3, matchup_4, matchup_5, matchup_6, matchup_7, matchup_8, matchup_9, matchup_10, matchup_11, matchup_12]

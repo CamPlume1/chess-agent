@@ -17,7 +17,8 @@ class ChessAgentEvaluator:
         agent_name: str,
         benchmark_name: str,
         centipawn_benchmark: StockfishStrategy,
-        view_game_progression: bool = False
+        view_game_progression: bool = False,
+        limit_game_duration: bool = True,
     ):
         self.agent = agent
         self.benchmark = benchmark
@@ -32,6 +33,7 @@ class ChessAgentEvaluator:
         self.benchmark_centipawn_loss = 0
         self.view_game_progression = view_game_progression
         self.game_progression = None
+        self.limit_game_duration = limit_game_duration
 
     def play_game(self, agent_color="white") -> str:
         board = chess.Board()
@@ -52,7 +54,7 @@ class ChessAgentEvaluator:
         self.benchmark.board = board
 
         controller = GameController(white, black, board, view=self.view)
-        result = controller.play_game(centipawn_benchmark=self.centipawn_benchmark)
+        result = controller.play_game(centipawn_benchmark=self.centipawn_benchmark, limit_game_duration=self.limit_game_duration)
         winner = result["result"]
         print(f'\n\n\nResult: {result}\n\n\n')
         self.agent_centipawn_loss += result["white_average_centipawn_loss"] if self.agent.side == WHITE else result["black_average_centipawn_loss"]

@@ -16,7 +16,7 @@ class GameController:
         else:
             self.view = None
 
-    def play_game(self, centipawn_benchmark: StockfishStrategy) -> str:
+    def play_game(self, centipawn_benchmark: StockfishStrategy, limit_game_duration: bool) -> str:
         # Reset board to home state
         if self.view:
             self.view.print_board()
@@ -28,7 +28,7 @@ class GameController:
         result = {}
 
         while not self.board.is_game_over():
-            if len(self.board.move_stack) // 2 > 80:
+            if limit_game_duration and len(self.board.move_stack) // 2 > 80:
                 centipawn_benchmark.board = self.board
                 stockfish_evaluation = centipawn_benchmark.get_centipawn_analysis()
 

@@ -1,11 +1,8 @@
-import time
 import chess
 from app.strategies.abstrategy import Strategy
 from app.strategies.stockfish_strategy import StockfishStrategy
 
 class GameController:
-
-
     def __init__(self, agent1: Strategy, agent2: Strategy, board: chess.Board, view=None):
         self.white = agent1
         self.black = agent2

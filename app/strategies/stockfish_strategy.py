@@ -3,7 +3,6 @@ import chess.engine
 from chess import WHITE, Board, Color
 from app.strategies.abstrategy import Strategy
 
-
 class StockfishStrategy(Strategy):
     def __init__(
         self,

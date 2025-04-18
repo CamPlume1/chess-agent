@@ -77,7 +77,7 @@ class NeuralNetworkModel:
     @staticmethod
     def evaluate_fen(fen: str, model_path: str):
         if NeuralNetworkModel._model is None:
-            print("Loading New Model")
+            print("Loading neural network model")
             features = NeuralNetworkModel.fen_to_feature_array(fen)
             input_tensor = torch.tensor(features, dtype=torch.float32).unsqueeze(0)
             NeuralNetworkModel._input_size = input_tensor.shape[1]

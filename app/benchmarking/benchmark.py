@@ -109,7 +109,6 @@ class ChessAgentEvaluator:
             f"Average moves per game (plies): {avg_moves:.1f}\n"
             f"Agent average centipawn loss per move: {self.agent_centipawn_loss:.3f}\n"
             f"Benchmark average centipawn loss per move: {self.benchmark_centipawn_loss:.3f}\n"
-            f"Game analysis progression: {self.game_progression}\n"
             f"Score: {(self.results['win'] + 0.5 * self.results['draw']) / total_games:.3f}\n"
             f"Estimated Elo difference vs benchmark: {diff:.2f}\n"
             f"{self.agent_name} approx equal {estimated_elo:.0f} Elo (assuming {self.benchmark_name} is {self.benchmark_elo})\n"

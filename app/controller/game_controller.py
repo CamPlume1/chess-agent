@@ -60,7 +60,6 @@ class GameController:
 
             if self.view:
                 self.view.print_board()
-                time.sleep(1) 
             if self.current_agent is self.white:
                 white_centipawn_loss += top_engine_move_centipawn - actual_move_centipawn
                 self.current_agent = self.black

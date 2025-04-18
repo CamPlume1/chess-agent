@@ -1,0 +1,10 @@
+
+=== Final Results ([AB + Standard Depth=4] vs [Stockfish]) ===
+Wins: 8, Losses: 17, Draws: 0
+Number of games: 25
+Average moves per game (plies): 117.8
+Agent average centipawn loss per move: 237.394
+Benchmark average centipawn loss per move: 590.835
+Score: 0.320
+Estimated Elo difference vs benchmark: -130.94
+AB + Standard Depth=4 approx equal 769 Elo (assuming Stockfish is 900)

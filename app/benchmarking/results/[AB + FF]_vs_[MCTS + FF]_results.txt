@@ -7,4 +7,3 @@ Agent average centipawn loss per move: 438.722
 Benchmark average centipawn loss per move: 795.575
 Score: 0.960
 Estimated Elo difference vs benchmark: 552.08
-AB + FF approx equal 1452 Elo (assuming MCTS + FF is 900)

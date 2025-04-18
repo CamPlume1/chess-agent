@@ -40,7 +40,13 @@ mcts_cnn = MCTSStrategy(
 
 ab_standard = ABPruningStrategy(
     board=None,
-    evaluator=StandardEvaluator(),
+    evaluator=NeuralNetworkEvaluator(),
+    side=None,
+)
+
+agent2 = MCTSStrategy(
+    board=None,
+    evaluator=ConvolutionalNetworkEvaluator(),
     side=None,
 )
 

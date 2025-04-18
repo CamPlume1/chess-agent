@@ -1,0 +1,10 @@
+
+=== Final Results ([AB + Standard] vs [AB + FF]) ===
+Wins: 13, Losses: 0, Draws: 12
+Number of games: 25
+Average moves per game (plies): 100.1
+Agent average centipawn loss per move: 1652.509
+Benchmark average centipawn loss per move: 225.468
+Score: 0.760
+Estimated Elo difference vs benchmark: 200.24
+AB + Standard approx equal 1100 Elo (assuming AB + FF is 900)

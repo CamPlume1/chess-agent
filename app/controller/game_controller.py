@@ -26,7 +26,7 @@ class GameController:
         result = {}
 
         while not self.board.is_game_over():
-            if len(self.board.move_stack) // 2 > 100:
+            if len(self.board.move_stack) // 2 > 80:
                 centipawn_benchmark.board = self.board
                 stockfish_evaluation = centipawn_benchmark.get_centipawn_analysis()
 

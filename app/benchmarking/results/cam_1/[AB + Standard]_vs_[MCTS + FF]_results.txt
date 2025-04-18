@@ -1,0 +1,10 @@
+
+=== Final Results ([AB + Standard] vs [MCTS + FF]) ===
+Wins: 24, Losses: 0, Draws: 1
+Number of games: 25
+Average moves per game (plies): 56.1
+Agent average centipawn loss per move: 442.575
+Benchmark average centipawn loss per move: 463.185
+Score: 0.980
+Estimated Elo difference vs benchmark: 676.08
+AB + Standard approx equal 1576 Elo (assuming MCTS + FF is 900)

@@ -1,0 +1,10 @@
+
+=== Final Results ([AB + FFN] vs [MCTS + CNN]) ===
+Wins: 22, Losses: 2, Draws: 1
+Number of games: 25
+Average moves per game (plies): 47.0
+Agent average centipawn loss per move: 676.537
+Benchmark average centipawn loss per move: 1442.717
+Score: 0.900
+Estimated Elo difference vs benchmark: 381.70
+AB + FFN approx equal 1282 Elo (assuming MCTS + CNN is 900)

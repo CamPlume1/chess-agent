@@ -6,6 +6,7 @@ from app.strategies.stockfish_strategy import StockfishStrategy
 from app.controller.game_controller import GameController
 from app.view.gui_view import ChessGui
 import matplotlib.pyplot as plt
+import os
 
 class ChessAgentEvaluator:
     def __init__(
@@ -100,7 +101,6 @@ class ChessAgentEvaluator:
 
     def print_summary(self):
         diff = self.calculate_elo_diff()
-        estimated_elo = self.benchmark_elo + diff
         total_games = sum(self.results.values())
         avg_moves = self.total_moves / total_games if total_games > 0 else 0
 
@@ -113,12 +113,13 @@ class ChessAgentEvaluator:
             f"Benchmark average centipawn loss per move: {self.benchmark_centipawn_loss:.3f}\n"
             f"Score: {(self.results['win'] + 0.5 * self.results['draw']) / total_games:.3f}\n"
             f"Estimated Elo difference vs benchmark: {diff:.2f}\n"
-            f"{self.agent_name} approx equal {estimated_elo:.0f} Elo (assuming {self.benchmark_name} is {self.benchmark_elo})\n"
         )
 
         print(summary)
 
-        filename = f"./app/benchmarking/results/[{self.agent_name}]_vs_[{self.benchmark_name}]_results.txt"
+        os.makedirs(f"./app/benchmarking/results/[{self.agent_name}]_vs_[{self.benchmark_name}]", exist_ok=True)
+
+        filename = f"./app/benchmarking/results/[{self.agent_name}]_vs_[{self.benchmark_name}]/[{self.agent_name}]_vs_[{self.benchmark_name}]_results.txt"
         with open(filename, 'w') as f:
             f.write(summary)
 
@@ -139,4 +140,4 @@ class ChessAgentEvaluator:
             ax.set_facecolor("gray")
             fig.patch.set_facecolor("gray")
 
-            plt.savefig(f"./app/benchmarking/results/[{self.agent_name}]_vs_[{self.benchmark_name}]_game_progression.png")
+            plt.savefig(f"./app/benchmarking/results/[{self.agent_name}]_vs_[{self.benchmark_name}]/[{self.agent_name}]_vs_[{self.benchmark_name}]_game_progression.png")

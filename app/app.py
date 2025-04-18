@@ -404,6 +404,8 @@ matchup_27 = ChessAgentEvaluator(
     limit_game_duration=False
 )
 
+######################################## Script ########################################
+
 cam_matchups = [matchup_1, matchup_2, matchup_3, matchup_4, matchup_5, matchup_6, matchup_7, matchup_8, matchup_9, matchup_10, matchup_11, matchup_12]
 adam_matchups = [matchup_13, matchup_14, matchup_15, matchup_16, matchup_17, matchup_18, matchup_19, matchup_20, matchup_21, matchup_22, matchup_23, matchup_24, matchup_25, matchup_26, matchup_27]
 

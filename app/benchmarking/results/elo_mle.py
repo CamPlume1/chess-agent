@@ -50,7 +50,7 @@ agents = [
 ]
 
 agent_to_index = {agent: i for i, agent in enumerate(agents)}
-index_to_agent = {i: agent for agent, i in agent_to_index.items()}
+index_to_agent = agents
 n_agents = len(agents)
 
 fixed_ratings = {

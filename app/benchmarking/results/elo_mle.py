@@ -50,7 +50,6 @@ agents = [
 ]
 
 agent_to_index = {agent: i for i, agent in enumerate(agents)}
-index_to_agent = agents
 n_agents = len(agents)
 
 fixed_ratings = {
@@ -107,7 +106,7 @@ for i in range(n_agents):
         final_ratings[i] = result.x[free_index]
 
 final_df = pd.DataFrame({
-    "Agent": [index_to_agent[i] for i in range(n_agents)],
+    "Agent": agents,
     "Estimated Elo": [final_ratings[i] for i in range(n_agents)]
 })
 

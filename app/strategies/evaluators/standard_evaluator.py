@@ -25,7 +25,7 @@ class StandardEvaluator(PositionEvaluator):
         piece_values = {
             chess.PAWN: 100,
             chess.KNIGHT: 300,
-            chess.BISHOP: 350,
+            chess.BISHOP: 325,
             chess.ROOK: 500,
             chess.QUEEN: 900,
             chess.KING: 10000,
@@ -52,7 +52,7 @@ class StandardEvaluator(PositionEvaluator):
         reward = 0
 
         # Loop over all pawns on board.
-        for square, piece in board.piece_map().items():
+        for square, piece in board.piece_pmap().items():
             if piece.piece_type == chess.PAWN:
                 if piece.color == chess.WHITE:
                     if self._is_passed_pawn(board, square, chess.WHITE):

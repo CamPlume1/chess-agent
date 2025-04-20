@@ -17,10 +17,10 @@ class ChessDataset(Dataset):
     def __len__(self):
         return len(self.Y)
 
-    def __getitem__(self, idx):
-        board = self.X['board_vec'][idx]
-        meta = self.X['meta_vec'][idx]
-        label = self.Y[idx]
+    def __getitem__(self, i):
+        board = self.X['board_vec'][i]
+        meta = self.X['meta_vec'][i]
+        label = self.Y[i]
         return board, meta, label
 
 # The Vibe model
@@ -87,15 +87,15 @@ class ConvolutionInputModel:
         # Split the board representation by ranks (rows)
         ranks = board.split('/')
 
-        for rank_idx, rank in enumerate(ranks):
-            file_idx = 0
+        for rank_index, rank in enumerate(ranks):
+            file_index = 0
             for char in rank:
                 if char.isdigit():
-                    file_idx += int(char)
+                    file_index += int(char)
                 else:
                     channel = PIECES_TO_CHANNEL[char]
-                    board_features[channel, rank_idx, file_idx] = 1
-                    file_idx += 1
+                    board_features[channel, rank_index, file_index] = 1
+                    file_index += 1
 
         # Encode turn, 0 for white
         meta_features[0] = 0 if turn == 'w' else 1

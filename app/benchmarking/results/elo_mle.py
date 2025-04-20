@@ -49,8 +49,8 @@ agents = [
     "Stockfish"
 ]
 
-agent_to_index = {agent: idx for idx, agent in enumerate(agents)}
-index_to_agent = {idx: agent for agent, idx in agent_to_index.items()}
+agent_to_index = {agent: i for i, agent in enumerate(agents)}
+index_to_agent = {i: agent for agent, i in agent_to_index.items()}
 n_agents = len(agents)
 
 fixed_ratings = {
@@ -77,8 +77,8 @@ def neg_log_likelihood(free_ratings):
         if i in fixed_ratings:
             ratings[i] = fixed_ratings[i]
         else:
-            idx = free_indices.index(i)
-            ratings[i] = free_ratings[idx]
+            free_index = free_indices.index(i)
+            ratings[i] = free_ratings[free_index]
 
     neg_log_lik = 0
     for (i, j), (w_ij, d_ij, l_ij) in match_counts.items():
@@ -103,8 +103,8 @@ for i in range(n_agents):
     if i in fixed_ratings:
         final_ratings[i] = fixed_ratings[i]
     else:
-        idx = free_indices.index(i)
-        final_ratings[i] = result.x[idx]
+        free_index = free_indices.index(i)
+        final_ratings[i] = result.x[free_index]
 
 final_df = pd.DataFrame({
     "Agent": [index_to_agent[i] for i in range(n_agents)],

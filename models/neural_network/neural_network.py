@@ -10,8 +10,8 @@ class ChessDataset(Dataset):
     def __len__(self):
         return len(self.X)
 
-    def __getitem__(self, idx):
-        return self.X[idx], self.y[idx]
+    def __getitem__(self, i):
+        return self.X[i], self.y[i]
     
 class ChessEvaluationNeuralNetwork(nn.Module):
     def __init__(self, input_size):
